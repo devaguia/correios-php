@@ -1,0 +1,5 @@
+# ignore folders
+vendor/
+
+# ignore files
+*.lock

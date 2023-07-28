@@ -1,0 +1,39 @@
+{
+  "name": "aguiarrdev/correios",
+  "version": "1.0.0",
+  "description": "Correios API library for PHP",
+  "license": "GPL-3.0",
+  "scripts": {
+    "test": "./vendor/bin/pest"
+  },
+  "support": {
+    "issues": "https://github.com/aguiarrdev/correios/issues",
+    "source": "https://github.com/aguiarrdev/correios"
+  },
+  "keywords": [
+    "library",
+    "envio",
+    "rastreio",
+    "shipping",
+    "correios"
+  ],
+  "authors": [
+    {
+      "name": "Matheus Aguiar",
+      "email": "aguiartgv@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Correios\\": "src/"
+    }
+  },
+  "require-dev": {
+    "pestphp/pest": "^2.9"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}
