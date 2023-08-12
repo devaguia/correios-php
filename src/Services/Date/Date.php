@@ -1,6 +1,6 @@
 <?php
 
-namespace Correios\Services\Correios\Requests\Operations;
+namespace Correios\Services\Date;
 
 use Correios\Services\AbstractRequest;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Correios\Services\PrePost;
+namespace Correios\Services\Authorization;
 
 use Correios\Services\AbstractRequest;
 
-class Delete extends AbstractRequest
+class Authentication extends AbstractRequest
 {
     public function handleRequest(): array
     {

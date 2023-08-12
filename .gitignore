@@ -3,3 +3,4 @@ vendor/
 
 # ignore files
 *.lock
+.idea/
