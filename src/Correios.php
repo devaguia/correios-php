@@ -13,7 +13,7 @@ use Correios\Services\{
 
 class Correios
 {
-    public Authentication $authentication;
+    private Authentication $authentication;
     private string $requestNumber;
     private string $lotId;
     private string $contract;
@@ -46,6 +46,11 @@ class Correios
     public function address(string $cep): Cep
     {
         return new Cep($cep);
+    }
+
+    public function authentication(): Authentication
+    {
+        return $this->authentication;
     }
 
     private function authenticate(string $username, string $password, string $contract, bool $isTestMode, string $token): void
