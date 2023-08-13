@@ -2,6 +2,7 @@
 
 namespace Correios\Services;
 
+use Correios\Exceptions\ApiRequestException;
 use Correios\Helpers\Settings;
 use Correios\Services\Authorization\Authentication;
 use stdClass;
@@ -56,11 +57,11 @@ abstract class AbstractRequest
     {
         $isTestMode = $this->getEnvironment() == 'sandbox';
 
-        if (isset($this->contract)) {
-            $isTestMode = $this->contract->getEnviroment() == 'sandbox';
+        if (isset($this->authentication)) {
+            $isTestMode = $this->authentication->getEnvironment() == 'sandbox';
         }
 
-        return Settings::getEnviromentUrl($isTestMode) . "/$endpoint";
+        return Settings::getEnvironmentUrl($isTestMode) . "/$endpoint";
     }
 
     protected function getEnvironment(): string
