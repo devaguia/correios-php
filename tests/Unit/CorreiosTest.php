@@ -16,7 +16,6 @@ dataset('serviceCode', ['04162']);
 dataset('correios', [new Correios($username, $password, $contract, true)]);
 
 
-
 test('It should be possible to instance the Correios class', function(string $username, string $password, string $contract){
     $correios = new Correios($username, $password, $contract, true);
 
