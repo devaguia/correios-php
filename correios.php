@@ -1,13 +1,13 @@
 <?php
 
 
-$correios = new Correios(username:'user', password:'password', contract:'contract', isTestMode:true, drNumber: '');
+$correios = new \Correios\Correios(username:'user', password:'password', contract:'contract', isTestMode:true);
 
 //rastro
 $correios->tracking()->get(codRastreio: 'AASD546115A');
 $correios->tracking()->getResponseBody();
 $correios->tracking()->getResponseCode();
-$correios->tracking()->getErros();
+$correios->tracking()->getErrors();
 
 //preço
 $correios->price()->get(
@@ -17,7 +17,7 @@ $correios->price()->get(
 );
 $correios->price()->getResponseBody();
 $correios->price()->getResponseCode();
-$correios->price()->getErros();
+$correios->price()->getErrors();
 
 //prazo
 $correios->date()->get(
@@ -28,35 +28,10 @@ $correios->date()->get(
 );
 $correios->date()->getResponseBody();
 $correios->date()->getResponseCode();
-$correios->date()->getErros();
+$correios->date()->getErrors();
 
 //cep
-$correios->cep()->get(cep: '35024190');
-$correios->cep()->getResponseBody();
-$correios->cep()->getResponseCode();
-$correios->cep()->getErros();
-
-//address
-$correios->address()->get(
-    cep: '35024190',
-    uf: 'MG',
-    localidade: 'localidade',
-    bairro: 'bairro',
-    siglaUnidade: '',
-    tipoCEP: 2,
-    clique: '',
-    caixaPostal: '',
-    locker: '',
-    agenciaModular: '',
-    cepInicial: '',
-    cepFinal: '',
-    numeroBairro: 0,
-    numeroCaixaPostal: '',
-    page: 1,
-    size: 50,
-    sort: ''
-);
+$correios->address()->get(cep: '35024190');
 $correios->address()->getResponseBody();
 $correios->address()->getResponseCode();
-$correios->address()->getErros();
-
+$correios->address()->getErrors();

@@ -2,6 +2,7 @@
 
 namespace Correios;
 
+use Correios\Exceptions\InvalidCorreiosServiceCode;
 use Correios\Helpers\Settings;
 use Correios\Services\{
     Authorization\Authentication,
@@ -28,24 +29,24 @@ class Correios
         $this->authenticate($username, $password, $contract, $isTestMode, $token);
     }
 
-    public function tracking(string $trackingCode): Tracking
+    public function tracking(): Tracking
     {
-        return new Tracking($trackingCode);
+        return new Tracking;
     }
 
-    public function price(array $serviceCodes, array $products, string $originCep, string $destinyCep): Price
+    public function price(): Price
     {
-        return new Price($serviceCodes, $products, $originCep, $destinyCep);
+        return new Price;
     }
 
-    public function date(array $serviceCodes, string $originCep, string $destinyCep): Date
+    public function date(): Date
     {
-        return new Date($serviceCodes, $originCep, $destinyCep);
+        return new Date;
     }
 
-    public function address(string $cep): Cep
+    public function address(): Cep
     {
-        return new Cep($cep);
+        return new Cep;
     }
 
     public function authentication(): Authentication
