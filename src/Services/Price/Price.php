@@ -2,6 +2,7 @@
 
 namespace Correios\Services\Price;
 
+use Correios\Exceptions\ApiRequestException;
 use Correios\Services\AbstractRequest;
 
 class Price extends AbstractRequest
@@ -14,9 +15,16 @@ class Price extends AbstractRequest
         $this->lotId = $requestNumber . 'LT';
     }
 
-    public function handleRequest(): array
+    public function get(array $serviceCodes, array $products, string $originCep, $destinyCep): array
     {
-        return [];
+        try {
+            $this->sendRequest();
+            return [];
+
+        } catch (ApiRequestException $e) {
+            $this->errors[$e->getCode()] = $e->getMessage();
+            return [];
+        }
     }
 }
 

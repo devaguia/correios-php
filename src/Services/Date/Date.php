@@ -2,6 +2,7 @@
 
 namespace Correios\Services\Date;
 
+use Correios\Exceptions\ApiRequestException;
 use Correios\Services\AbstractRequest;
 
 class Date extends AbstractRequest
@@ -14,9 +15,16 @@ class Date extends AbstractRequest
         $this->lotId = $requestNumber . 'LT';
     }
 
-    public function handleRequest(): array
+    public function get(array $serviceCodes, $originCep, $destinyCep): array
     {
-        return [];
+        try {
+            $this->sendRequest();
+            return [];
+
+        } catch (ApiRequestException $e) {
+            $this->errors[$e->getCode()] = $e->getMessage();
+            return [];
+        }
     }
 }
 

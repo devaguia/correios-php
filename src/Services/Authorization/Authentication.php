@@ -43,13 +43,8 @@ class Authentication extends AbstractRequest
     public function generateToken(): void
     {
         try {
-            $response = $this->handleRequest();
-
-            if (!isset($response['data'])) {
-                return;
-            }
-
-            $data = $response['data'];
+            $this->sendRequest();
+            $data = $this->getResponseBody();
 
             if (isset($data->token) && isset($data->expiraEm)) {
                 $this->token = $data->token;
@@ -73,16 +68,6 @@ class Authentication extends AbstractRequest
     public function getTokenExpiration(): \DateTime
     {
         return $this->tokenExpiration ?? new \DateTime();
-    }
-
-    public function handleRequest(): array
-    {
-        $this->sendRequest();
-
-        return [
-            'code' => $this->getResponseCode(),
-            'date' => $this->getResponseBody()
-        ];
     }
 }
 

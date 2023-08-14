@@ -125,5 +125,4 @@ abstract class AbstractRequest
         return $this->responseBody ?? new stdClass;
     }
 
-    abstract public function handleRequest(): array;
 }

@@ -12,8 +12,9 @@ $correios->tracking()->getErrors();
 //preço
 $correios->price()->get(
     serviceCodes:['04162'],
-    cepInicial:'71930000',
-    cepFinal:'05336010'
+    products:[300],
+    originCep:'71930000',
+    destinyCep:'05336010'
 );
 $correios->price()->getResponseBody();
 $correios->price()->getResponseCode();
@@ -22,9 +23,8 @@ $correios->price()->getErrors();
 //prazo
 $correios->date()->get(
     serviceCodes:['04162'],
-    products:[300],
-    cepInicial:'71930000',
-    cepFinal:'05336010'
+    originCep:'71930000',
+    destinyCep:'05336010'
 );
 $correios->date()->getResponseBody();
 $correios->date()->getResponseCode();
