@@ -16,14 +16,12 @@ class Correios
 {
     private Authentication $authentication;
     private string $requestNumber;
-    private string $lotId;
     private string $contract;
     private array $errors = [];
 
     public function __construct(string $username, string $password, string $contract, bool $isTestMode = false, string $token = '')
     {
         $this->requestNumber = time();
-        $this->lotId         = $this->requestNumber . 'LT';
         $this->contract      = $contract;
 
         $this->authenticate($username, $password, $contract, $isTestMode, $token);
@@ -36,12 +34,12 @@ class Correios
 
     public function price(): Price
     {
-        return new Price;
+        return new Price($this->requestNumber);
     }
 
     public function date(): Date
     {
-        return new Date;
+        return new Date($this->requestNumber);
     }
 
     public function address(): Cep
