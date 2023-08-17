@@ -21,7 +21,7 @@ test('It should be possible to instance the Correios class', function(string $us
 
 })->with('username', 'password', 'contract');
 
-describe('tracking method', function() {
+describe('tracking() method', function() {
     test('It should be possible to access the tracking method', function(Correios $correios){
         expect($correios->tracking())
             ->not->toBeNull();
@@ -35,7 +35,7 @@ describe('tracking method', function() {
     })->with('correios');
 });
 
-describe('price method', function() {
+describe('price() method', function() {
     test('It should be possible to access the price method', function(Correios $correios){
         expect($correios->price())
             ->not->toBeNull();
@@ -49,8 +49,8 @@ describe('price method', function() {
     })->with('correios');
 });
 
-describe('date method', function() {
-    test('It should be possible to access the date method', function(Correios $correios){
+describe('date() method', function() {
+    test('It should be possible to access the date() method', function(Correios $correios){
         expect($correios->date())
             ->not->toBeNull();
 
@@ -63,8 +63,8 @@ describe('date method', function() {
     })->with('correios');
 });
 
-describe('address method', function() {
-    test('It should be possible to access the address method', function(Correios $correios){
+describe('address() method', function() {
+    test('It should be possible to access the address() method', function(Correios $correios){
         expect($correios->address())
             ->not->toBeNull();
 
@@ -77,8 +77,8 @@ describe('address method', function() {
     })->with('correios');
 });
 
-describe('authentication method', function() {
-    test('It should be possible to access the authentication method', function(Correios $correios){
+describe('authentication() method', function() {
+    test('It should be possible to access the authentication() method', function(Correios $correios){
         expect($correios->authentication())
             ->not->toBeNull();
 
@@ -91,8 +91,8 @@ describe('authentication method', function() {
     })->with('correios');
 });
 
-describe('getErrors method', function() {
-    test('It should be possible to access the getErrors method', function(Correios $correios){
+describe('getErrors() method', function() {
+    test('It should be possible to access the getErrors() method', function(Correios $correios){
         expect($correios->getErrors())
             ->not->toBeNull();
     })->with('correios');
