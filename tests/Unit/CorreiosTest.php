@@ -1,9 +1,10 @@
 <?php
 use Correios\Correios;
+use function Pest\Faker\fake;
 
-$username   = 'bvcbltda';
-$contract   = '9912420493';
-$password   = 'inANUOVQBvAmRbAVemRqmpZhQFMYzGL1fsPcXQiH';
+$username = fake()->userName();
+$contract = fake()->regexify('[0-9]{10}');
+$password = fake()->password();
 
 dataset('username', [$username]);
 dataset('password', [$password]);
