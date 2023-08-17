@@ -4,7 +4,7 @@
 $correios = new \Correios\Correios(username:'user', password:'password', contract:'contract', isTestMode:true);
 
 //rastro
-$correios->tracking()->get(codRastreio: 'AASD546115A');
+$correios->tracking()->get(trackingCode: 'AASD546115A');
 $correios->tracking()->getResponseBody();
 $correios->tracking()->getResponseCode();
 $correios->tracking()->getErrors();
