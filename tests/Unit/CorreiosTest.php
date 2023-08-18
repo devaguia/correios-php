@@ -40,7 +40,7 @@ describe('price() method', function() {
         expect($correios->price())
             ->not->toBeNull();
 
-    })->with('correios', 'serviceCode', 'product', 'originCep', 'destinyCep');
+    })->with('correios');
 
     test('The price() method should return an instance of Correios\Services\Price\Price', function(Correios $correios){
         expect($correios->price())
