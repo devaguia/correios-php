@@ -10,7 +10,7 @@ Correios API library for PHP
 
 <h2 id="usage">Utilização Básica (Basic Usage)</h2>
 
-### Configuração (Configurate)
+### Configuração (Setup)
 ```PHP
 $correios = new \Correios\Correios(
     username: 'user',
