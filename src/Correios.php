@@ -29,7 +29,7 @@ class Correios
 
     public function tracking(): Tracking
     {
-        return new Tracking;
+        return new Tracking($this->authentication);
     }
 
     public function price(): Price
