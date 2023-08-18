@@ -10,6 +10,7 @@ $token    = fake()->regexify('[0-9]{10}[A-Z]{5}[a-z]{5}');
 dataset('username', [$username]);
 dataset('password', [$password]);
 dataset('contract', [$contract]);
+dataset('token', [$token]);
 
 test('It should be possible instance the authentication class without generate any errors in the array list', function(string $username, string $password, string $contract) {
     $authentication = new Authentication($username, $password, $contract, true);
