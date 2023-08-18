@@ -20,10 +20,10 @@ jobs:
         with:
           php-version: 8.2
           tools: composer:v2
-          coverage: xdebug
+          coverage: none
  
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
  
       - name: Tests
-        run: ./vendor/bin/pest
+        run: composer test
