@@ -4,6 +4,7 @@ Correios API library for PHP
 * **[Utilização Básica (Basic Usage)](#usage)**
 * **[Respostas API (API Response)](#response)**
 * **[Autenticação (Authentication)](#auth)**
+* **[Árvore de Arquivos (File Tree)](#tree)**
 
 <br/>
 
@@ -74,4 +75,61 @@ $responseCode    = $correios->authentication()->getResponseCode();
 $errors          = $correios->authentication()->getErrors();
 ```
 
+<br/>
+
+<h2 id="tree">File Tree</h2>
+
+```
+.
+├── composer.json
+├── composer.lock
+├── correios.php
+├── LICENSE
+├── phpunit.xml
+├── phpunit.xml.bak
+├── README.md
+├── src
+│   ├── Correios.php
+│   ├── Exceptions
+│   │   ├── ApiRequestException.php
+│   │   └── InvalidCorreiosServiceCode.php
+│   ├── Helpers
+│   │   └── Settings.php
+│   ├── Includes
+│   │   ├── Address.php
+│   │   └── Product.php
+│   └── Services
+│       ├── AbstractRequest.php
+│       ├── Address
+│       │   └── Cep.php
+│       ├── Authorization
+│       │   └── Authentication.php
+│       ├── Date
+│       │   └── Date.php
+│       ├── Price
+│       │   └── Price.php
+│       └── Tracking
+│           └── Tracking.php
+└── tests
+    ├── Feature
+    └── Unit
+        ├── CorreiosTest.php
+        ├── Helpers
+        │   └── SettingsTest.php
+        ├── Includes
+        │   ├── AddressTest.php
+        │   └── ProductTest.php
+        └── Services
+            ├── Address
+            │   └── CepTest.php
+            ├── Authorization
+            │   └── AuthenticationTest.php
+            ├── Date
+            │   └── DateTest.php
+            ├── Price
+            │   └── PriceTest.php
+            └── Tracking
+                └── TrackingTest.php
+
+```
 
