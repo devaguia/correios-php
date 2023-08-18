@@ -67,6 +67,13 @@ if (empty($responseBody)) {
 <h2 id="auth">Autenticação (Authentication)</h2>
 
 ```PHP
+$correios = new \Correios\Correios(
+    username: 'user',
+    password: 'password',
+    contract: 'contract',
+    isTestMode: true
+);
+
 $token           = $correios->authentication()->getToken();
 $tokenExpiration = $correios->authentication()->getTokenExpiration();
 
