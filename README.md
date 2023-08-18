@@ -5,7 +5,12 @@ Correios API library for PHP
 
 ```PHP
 
-$correios = new \Correios\Correios(username:'user', password:'password', contract:'contract', isTestMode:true);
+$correios = new \Correios\Correios(
+    username:'user',
+    password:'password',
+    contract:'contract',
+    isTestMode:true
+);
 
 //tracking
 $correios->tracking()->get(trackingCode: 'AASD546115A');
