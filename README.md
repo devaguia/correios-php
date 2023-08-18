@@ -20,7 +20,7 @@ $correios = new \Correios\Correios(
 );
 ```
 
-### Prazo (Tracking)
+### Rastro (Tracking)
 ```PHP
 $response = $correios->tracking()->get(trackingCode: 'AASD546115A');
 ```
