@@ -17,7 +17,7 @@ dataset('trackingCode', [$trackingCode]);
 test('It should be possible to instance the Tracking class without generate any errors', function(Authentication $authentication) {
     $tracking = new Tracking($authentication);
     expect($tracking)
-        ->toBeInstanceOf(stdClass::class);
+        ->toBeInstanceOf(Tracking::class);
 
 
 })->with('authentication');

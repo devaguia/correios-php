@@ -26,4 +26,4 @@ jobs:
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
  
       - name: Tests
-        run: ./vendor/bin/pest
+        run: composer test
