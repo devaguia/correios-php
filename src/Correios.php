@@ -34,7 +34,7 @@ class Correios
 
     public function price(): Price
     {
-        return new Price($this->requestNumber);
+        return new Price($this->authentication, $this->requestNumber);
     }
 
     public function date(): Date
