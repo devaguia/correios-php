@@ -17,7 +17,7 @@ abstract class AbstractRequest
     protected object $responseBody;
     private string $method;
     private string $endpoint;
-    private Authentication $authentication;
+    protected Authentication $authentication;
 
     protected function sendRequest(): void
     {
