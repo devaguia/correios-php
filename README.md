@@ -12,11 +12,22 @@ Correios API library for PHP
 
 ### Configuração (Setup)
 ```PHP
+// Parâmetros obrigatórios - Required Paramns
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
     contract: 'contract',
     isTestMode: true
+);
+
+// Parâmetros opcionais - Optional parameters
+$correios = new \Correios\Correios(
+    username: 'user',
+    password: 'password',
+    contract: 'contract',
+    isTestMode: true,
+    token: 'string',
+    lotId: 'string'
 );
 ```
 
@@ -27,20 +38,52 @@ $response = $correios->tracking()->get(trackingCode: 'AASD546115A');
 
 ### Preço (Price)
 ```PHP
-$response = $correios->price()->get(
-    serviceCodes: ['39870'],
-    products: [300],
-    originCep: '71930000',
-    destinyCep: '05336010'
+// Parâmetros obrigatórios - Required Paramns
+$correios->price()->get(
+    serviceCodes:['04162'],
+    products:[
+        ['weight' => 300]
+    ],
+    originCep:'71930000',
+    destinyCep:'05336010'
+);
+
+// Parâmetros opcionais - Optional parameters
+$correios->price()->get(
+    serviceCodes:['04162'],
+    products:[
+        [
+          'weight'      => 300,
+          'type'        => "string",
+          'length'      => 0,
+          'height'      => 200,
+          'width'       => 200,
+          'diameter'    => 0,
+          'cubicWeight' => 0
+        ]
+    ],
+    originCep:'71930000',
+    destinyCep:'05336010',
+    contract: true,
+    dr: 20
 );
 ```
 
 ### Prazo (Date)
 ```PHP
+// Parâmetros obrigatórios - Required Paramns
 $response = $correios->date()->get(
     serviceCodes: ['39870'],
     originCep: '71930000',
     destinyCep: '05336010'
+);
+
+// Parâmetros opcionais - Optional parameters
+$correios->date()->get(
+    serviceCodes:['04162'],
+    originCep:'71930000',
+    destinyCep:'05336010',
+    postDate: '2023-01-01T01:01:01.001Z'
 );
 ```
 
@@ -67,6 +110,7 @@ if (empty($responseBody)) {
 <h2 id="auth">Autenticação (Authentication)</h2>
 
 ```PHP
+// Gerando um novo token - Generating a new token
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
@@ -76,10 +120,20 @@ $correios = new \Correios\Correios(
 
 $token           = $correios->authentication()->getToken();
 $tokenExpiration = $correios->authentication()->getTokenExpiration();
-
 $responseBody    = $correios->authentication()->getResponseBody();
 $responseCode    = $correios->authentication()->getResponseCode();
 $errors          = $correios->authentication()->getErrors();
+
+
+// Usando um token gerado anteriormente - Using a token generated earlie
+$correios = new \Correios\Correios(
+    username: 'user',
+    password: 'password',
+    contract: 'contract',
+    isTestMode: true
+    token: 'generatedToken'
+);
+
 ```
 
 <br/>
