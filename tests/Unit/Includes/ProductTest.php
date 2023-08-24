@@ -19,13 +19,13 @@ describe('weight property', function() {
     test('It should be possible to access the weight property using the getWeight() method', function(Product $product){
         expect($product->getWeight())
             ->not->toBeNull()
-            ->toBeInt();
+            ->toBeFloat();
     })->with('product');
 
-    test('The getWeight() method must return the same value insert on the constructor method', function(Product $product, int $weight){
+    test('The getWeight() method must return the same value insert on the constructor method', function(Product $product, float $weight){
         expect($product->getWeight())
             ->not->toBeNull()
-            ->toBeInt()
+            ->toBeFloat()
             ->toBe($weight);
     })->with('product', 'weight');
 });
@@ -73,5 +73,35 @@ describe('length property', function() {
             ->toBeFloat()
             ->toBe($length);
     })->with('product', 'length');
+});
+
+describe('diameter property', function() {
+    test('It should be possible to access the diameter property using the getDiameter() method', function(Product $product){
+        expect($product->getDiameter())
+            ->not->toBeNull()
+            ->toBeFloat();
+    })->with('product');
+
+    test('The getDiameter() method must return the same value insert on the constructor method', function(Product $product, float $diameter){
+        expect($product->getDiameter())
+            ->not->toBeNull()
+            ->toBeFloat()
+            ->toBe($diameter);
+    })->with('product', 'diameter');
+});
+
+describe('cubicWeight property', function() {
+    test('It should be possible to access the cubicWeight property using the getCubicWeight() method', function(Product $product){
+        expect($product->getCubicWeight())
+            ->not->toBeNull()
+            ->toBeFloat();
+    })->with('product');
+
+    test('The getCubicWeight() method must return the same value insert on the constructor method', function(Product $product, float $cubicWeight){
+        expect($product->getCubicWeight())
+            ->not->toBeNull()
+            ->toBeFloat()
+            ->toBe($cubicWeight);
+    })->with('product', 'cubicWeight');
 });
 

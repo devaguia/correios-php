@@ -4,19 +4,30 @@ namespace Correios\Includes;
 
 class Product
 {
-    private int $weight;
+    private float $weight;
     private float $width;
     private float $height;
     private float $length;
-    public function __construct(int $weight, float $width, float $height, float $length)
-    {
-        $this->weight = $weight;
-        $this->width  = $width;
-        $this->height = $height;
-        $this->length = $length;
+    private float $diameter;
+    private float $cubicWeight;
+
+    public function __construct(
+        float $weight,
+        float $width = 0,
+        float $height = 0,
+        float $length = 0,
+        $diameter = 0,
+        $cubicWeight = 0
+    ) {
+        $this->weight      = $weight;
+        $this->width       = $width;
+        $this->height      = $height;
+        $this->length      = $length;
+        $this->diameter    = $diameter;
+        $this->cubicWeight = $cubicWeight;
     }
 
-    public function getWeight(): int
+    public function getWeight(): float
     {
         return $this->weight;
     }
@@ -34,5 +45,15 @@ class Product
     public function getLength(): float
     {
         return $this->length;
+    }
+
+    public function getDiameter(): float
+    {
+        return $this->diameter;
+    }
+
+    public function getCubicWeight(): float
+    {
+        return $this->cubicWeight;
     }
 }
