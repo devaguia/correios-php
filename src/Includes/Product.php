@@ -16,8 +16,8 @@ class Product
         float $width = 0,
         float $height = 0,
         float $length = 0,
-        $diameter = 0,
-        $cubicWeight = 0
+        float $diameter = 0,
+        float $cubicWeight = 0
     ) {
         $this->weight      = $weight;
         $this->width       = $width;
