@@ -13,6 +13,7 @@ class Tracking extends AbstractRequest
         $this->authentication = $authentication;
         $this->setMethod('GET');
         $this->setEnvironment($this->authentication->getEnvironment());
+        $this->buildHeaders();
     }
 
     private function buildEndpoint(string $trackingCode, string $filtered): void
@@ -33,7 +34,7 @@ class Tracking extends AbstractRequest
 
             return [
                 'code' => $this->getResponseCode(),
-                'data' => $this->getResponseBody()
+                'data' => $this->getResponseBody(),
             ];
 
         } catch (ApiRequestException $e) {
@@ -41,5 +42,12 @@ class Tracking extends AbstractRequest
             return [];
         }
     }
-}
 
+    private function buildHeaders(): void
+    {
+        $this->setHeaders([
+            'Authorization' => 'Basic ' . $this->token,
+        ]);
+    }
+
+}
