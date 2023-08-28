@@ -10,41 +10,51 @@ class Price extends AbstractRequest
 {
     private string $requestNumber;
     private string $lotId;
+    private array $serviceCodes;
+    private array $products;
+    private array $parametrosProduto;
+    private array $body;
+    private $token;
+
     public function __construct(Authentication $authentication, string $requestNumber)
     {
-        $this->requestNumber  = $requestNumber;
-        $this->lotId          = $requestNumber . 'LT';
+        $this->requestNumber = $requestNumber;
+        $this->lotId = $requestNumber . 'LT';
         $this->authentication = $authentication;
 
         $this->setMethod('POST');
         $this->setEndpoint('preco/v1/nacional');
         $this->setEnvironment($this->authentication->getEnvironment());
+        $this->buildHeaders();
     }
 
-    private function buildBody(): void
+    private function buildBody($serviceCodes, $products, $originCep, $destinyCep): void
     {
-        $products = [];
 
-        foreach ($this->products as $value) {
-            $products[] = [
-            ];
+        foreach ($serviceCodes as $service) {
+            foreach ($products as $product) {
+                $parametrosProduto[] = ["coProduto" => $service,
+                    "psObjeto" => $product["weight"],
+                    "cepOrigem" => $originCep,
+                    "cepDestino" => $destinyCep,
+                    "nuRequisicao" => $this->requestNumber];
+            }
         }
-
         $this->setBody([
             'idLote' => $this->lotId,
-            'parametrosProduto' => $products
+            'parametrosProduto' => $parametrosProduto,
         ]);
+
     }
 
-    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, $contract = ''): array
+    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep): array
     {
         try {
+            $this->buildBody($serviceCodes, $products, $originCep, $destinyCep);
             $this->sendRequest();
-            $this->buildBody();
-
             return [
                 'code' => $this->getResponseCode(),
-                'data' => $this->getResponseBody()
+                'data' => $this->getResponseBody(),
             ];
 
         } catch (ApiRequestException $e) {
@@ -52,5 +62,12 @@ class Price extends AbstractRequest
             return [];
         }
     }
-}
 
+    private function buildHeaders(): void
+    {
+        $this->setHeaders([
+            'Authorization' => 'Basic ' . $this->token,
+        ]);
+    }
+
+}

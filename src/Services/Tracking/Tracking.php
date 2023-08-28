@@ -8,6 +8,8 @@ use Correios\Services\Authorization\Authentication;
 
 class Tracking extends AbstractRequest
 {
+    private $token;
+
     public function __construct(Authentication $authentication)
     {
         $this->authentication = $authentication;
