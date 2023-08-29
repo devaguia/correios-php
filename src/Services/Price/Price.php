@@ -36,7 +36,7 @@ class Price extends AbstractRequest
         ]);
     }
 
-    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, $contract = ''): array
+    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract = '', int $dr = 0): array
     {
         try {
             $this->sendRequest();
