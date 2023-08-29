@@ -39,7 +39,7 @@ class Correios
 
     public function date(): Date
     {
-        return new Date($this->requestNumber);
+        return new Date($this->authentication, $this->requestNumber);
     }
 
     public function address(): Cep
