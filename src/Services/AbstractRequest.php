@@ -34,11 +34,13 @@ abstract class AbstractRequest
         }
 
         $response = json_decode(curl_exec($curl));
+
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
 
-        $data = is_object($response) ? $response : new stdClass;
+        
+        $data = is_object($response) ? $response : (object) $response;
 
         $this->responseBody = $data;
         $this->responseCode = $code;
@@ -77,6 +79,11 @@ abstract class AbstractRequest
     protected function setBody(array $body): void
     {
         $this->body = $body;
+    }
+
+    protected function getBody(): array
+    {
+        return $this->body;
     }
 
     protected function setHeaders(array $headers): void
