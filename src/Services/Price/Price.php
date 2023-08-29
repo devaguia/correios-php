@@ -3,18 +3,17 @@
 namespace Correios\Services\Price;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Services\AbstractRequest;
-use Correios\Services\Authorization\Authentication;
+use Correios\Exceptions\MissingProductParamException;
+use Correios\Includes\Product;
+use Correios\Services\{
+    AbstractRequest,
+    Authorization\Authentication
+};
 
 class Price extends AbstractRequest
 {
     private string $requestNumber;
     private string $lotId;
-    private array $serviceCodes;
-    private array $products;
-    private array $parametrosProduto;
-    private array $body;
-    private $token;
 
     public function __construct(Authentication $authentication, string $requestNumber)
     {
@@ -25,33 +24,109 @@ class Price extends AbstractRequest
         $this->setMethod('POST');
         $this->setEndpoint('preco/v1/nacional');
         $this->setEnvironment($this->authentication->getEnvironment());
-        $this->buildHeaders();
     }
 
-    private function buildBody($serviceCodes, $products, $originCep, $destinyCep): void
+    private function buildBody(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract, int $dr): void
     {
+        $productParams = [];
 
         foreach ($serviceCodes as $service) {
             foreach ($products as $product) {
-                $parametrosProduto[] = ["coProduto" => $service,
-                    "psObjeto" => $product["weight"],
+                $productParam = [
+                    "coProduto" => $service,
+                    "psObjeto" => $product->getWeight(),
                     "cepOrigem" => $originCep,
                     "cepDestino" => $destinyCep,
-                    "nuRequisicao" => $this->requestNumber];
+                    "nuRequisicao" => $this->requestNumber
+                ];
+
+                $productParams[] = $this->setOptionalParams($product, $productParam);
             }
         }
         $this->setBody([
             'idLote' => $this->lotId,
-            'parametrosProduto' => $parametrosProduto,
+            'parametrosProduto' => $productParams,
         ]);
 
     }
 
+    private function setOptionalParams(Product $product, array $productParam): array
+    {
+        if ($product->getWidth() > 0) {
+            $productParam['width'] = $product->getWidth();
+        }
 
+        if ($product->getHeight() > 0) {
+            $productParam['height'] = $product->getHeight();
+        }
+
+        if ($product->getLength() > 0) {
+            $productParam['length'] = $product->getLength();
+        }
+
+        if ($product->getDiameter() > 0) {
+            $productParam['diameter'] = $product->getDiameter();
+        }
+
+        if ($product->getCubicWeight() > 0) {
+            $productParam['cubicWeight'] = $product->getCubicWeight();
+        }
+
+        return $productParam;
+    }
+
+    private function buildProductList(array $products): array
+    {
+        $productList = [];
+        foreach ($products as $product) {
+            if (!isset($product['weight']) || !is_numeric($product['weight'])) {
+                throw new MissingProductParamException();
+            }
+
+            $product = $this->validateProductItem($product);
+            $productList[] = new Product(
+                $product['weight'],
+                $product['width'],
+                $product['height'],
+                $product['length'],
+                $product['diameter'],
+                $product['cubicWeight']
+            );
+        }
+
+        return $productList;
+    }
+
+    private function validateProductItem(array $product): array
+    {
+        $needed = [
+            'width',
+            'height',
+            'length',
+            'diameter',
+            'cubicWeight'
+        ];
+
+        foreach ($needed as $key) {
+            if (!isset($product[$key]) || !is_numeric($product)) {
+                $product[$key] = 0;
+            }
+        }
+
+        return $product;
+    }
     public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract = '', int $dr = 0): array
     {
         try {
-            $this->buildBody($serviceCodes, $products, $originCep, $destinyCep);
+            $this->buildBody(
+                $serviceCodes,
+                $this->buildProductList($products),
+                $originCep,
+                $destinyCep,
+                $contract,
+                $dr
+            );
+
             $this->sendRequest();
             return [
                 'code' => $this->getResponseCode(),
@@ -63,12 +138,4 @@ class Price extends AbstractRequest
             return [];
         }
     }
-
-    private function buildHeaders(): void
-    {
-        $this->setHeaders([
-            'Authorization' => 'Basic ' . $this->token,
-        ]);
-    }
-
 }
