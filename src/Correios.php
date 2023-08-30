@@ -59,7 +59,6 @@ class Correios
             $this->authentication->setToken($token);
             return;
         }
-
         $this->authentication->generateToken();
     }
 
