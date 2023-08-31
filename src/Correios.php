@@ -10,6 +10,7 @@ class Correios
 {
     private Authentication $authentication;
     private string $requestNumber;
+    private string $lotId;
     private string $contract;
     private array $errors = [];
 
@@ -70,5 +71,15 @@ class Correios
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function setRequestNumber(string $requestNumber): void
+    {
+        $this->requestNumber = $requestNumber;
+    }
+
+    public function setLotId(string $lotId): void
+    {
+        $this->lotId = $lotId;
     }
 }
