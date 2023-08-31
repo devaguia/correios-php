@@ -19,9 +19,6 @@ abstract class AbstractRequest
     private string $endpoint;
     protected Authentication $authentication;
 
-    /**
-     * @throws \JsonException
-     */
     protected function sendRequest(): void
     {
         $url  = $this->getRequestUrl($this->endpoint);
@@ -36,7 +33,7 @@ abstract class AbstractRequest
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->body));
         }
 
-        $response = json_decode(curl_exec($curl), false, 512, JSON_THROW_ON_ERROR);
+        $response = json_decode(curl_exec($curl), false);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
