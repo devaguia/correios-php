@@ -11,15 +11,15 @@ class Correios
     private Authentication $authentication;
     private string $requestNumber;
     private string $lotId;
-    private string $contract;
+    private string $postcard;
     private array $errors = [];
 
-    public function __construct(string $username, string $password, string $contract, bool $isTestMode = false, string $token = '')
+    public function __construct(string $username, string $password, string $postcard, bool $isTestMode = false, string $token = '')
     {
         $this->requestNumber = time();
-        $this->contract      = $contract;
+        $this->postcard      = $postcard;
 
-        $this->authenticate($username, $password, $contract, $isTestMode, $token);
+        $this->authenticate($username, $password, $postcard, $isTestMode, $token);
     }
 
     public function tracking(): Tracking
@@ -47,9 +47,9 @@ class Correios
         return $this->authentication;
     }
 
-    private function authenticate(string $username, string $password, string $contract, bool $isTestMode, string $token): void
+    private function authenticate(string $username, string $password, string $postcard, bool $isTestMode, string $token): void
     {
-        $this->authentication = new Authentication($username, $password, $contract, $isTestMode);
+        $this->authentication = new Authentication($username, $password, $postcard, $isTestMode);
         if ($token) {
             $this->authentication->setToken($token);
             return;
