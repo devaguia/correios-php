@@ -2,29 +2,22 @@
 
 namespace Correios;
 
-use Correios\Exceptions\InvalidCorreiosServiceCode;
-use Correios\Helpers\Settings;
-use Correios\Services\{
-    Authorization\Authentication,
-    Address\Cep,
-    Date\Date,
-    Price\Price,
-    Tracking\Tracking
-};
+use Correios\Services\{Address\Cep, Authorization\Authentication, Date\Date, Price\Price, Tracking\Tracking};
 
 class Correios
 {
     private Authentication $authentication;
     private string $requestNumber;
-    private string $contract;
+    private string $lotId;
+    private string $postcard;
     private array $errors = [];
 
-    public function __construct(string $username, string $password, string $contract, bool $isTestMode = false, string $token = '')
+    public function __construct(string $username, string $password, string $postcard, bool $isTestMode = false, string $token = '')
     {
         $this->requestNumber = time();
-        $this->contract      = $contract;
+        $this->postcard      = $postcard;
 
-        $this->authenticate($username, $password, $contract, $isTestMode, $token);
+        $this->authenticate($username, $password, $postcard, $isTestMode, $token);
     }
 
     public function tracking(): Tracking
@@ -52,9 +45,9 @@ class Correios
         return $this->authentication;
     }
 
-    private function authenticate(string $username, string $password, string $contract, bool $isTestMode, string $token): void
+    private function authenticate(string $username, string $password, string $postcard, bool $isTestMode, string $token): void
     {
-        $this->authentication = new Authentication($username, $password, $contract, $isTestMode);
+        $this->authentication = new Authentication($username, $password, $postcard, $isTestMode);
         if ($token) {
             $this->authentication->setToken($token);
             return;
@@ -63,18 +56,18 @@ class Correios
         $this->authentication->generateToken();
     }
 
-    private function validateServiceCode(string $code): string
-    {
-        $codes = Settings::getServiceCodes();
-
-        if (!isset($codes[$code])) {
-            throw new InvalidCorreiosServiceCode($code);
-        }
-        return $code;
-    }
-
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function setRequestNumber(string $requestNumber): void
+    {
+        $this->requestNumber = $requestNumber;
+    }
+
+    public function setLotId(string $lotId): void
+    {
+        $this->lotId = $lotId;
     }
 }

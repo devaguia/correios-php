@@ -3,23 +3,23 @@ use Correios\Correios;
 use function Pest\Faker\fake;
 
 $username = fake()->userName();
-$contract = fake()->regexify('[0-9]{10}');
+$postcard = fake()->regexify('[0-9]{10}');
 $password = fake()->password();
 
 dataset('username', [$username]);
 dataset('password', [$password]);
-dataset('contract', [$contract]);
-dataset('correios', [new Correios($username, $password, $contract, true)]);
+dataset('postcard', [$postcard]);
+dataset('correios', [new Correios($username, $password, $postcard, true)]);
 
 
-test('It should be possible to instance the Correios class', function(string $username, string $password, string $contract){
-    $correios = new Correios($username, $password, $contract, true);
+test('It should be possible to instance the Correios class', function(string $username, string $password, string $postcard){
+    $correios = new Correios($username, $password, $postcard, true);
 
     expect($correios)
         ->not->toBeNull()
         ->toBeInstanceOf(Correios::class);
 
-})->with('username', 'password', 'contract');
+})->with('username', 'password', 'postcard');
 
 describe('tracking() method', function() {
     test('It should be possible to access the tracking method', function(Correios $correios){

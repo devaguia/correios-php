@@ -1,19 +1,12 @@
 <?php
 
-namespace Correios\Helpers;
+declare(strict_types=1);
 
-class Settings
-{
-    public static function getServiceCodes(): array
-    {
-        return [
-            '04162' => 'Código 01',
-            '04596' => 'Código 02'
-        ];
-    }
+use Correios\Includes\Settings;
 
-    public static function getEnvironmentUrl(bool $isTestMode = false): string
+if (!function_exists('settings')) {
+    function settings(): Settings
     {
-        return $isTestMode ? 'https://apihom.correios.com.br' : 'https://api.correios.com.br';
+        return new Settings();
     }
 }

@@ -16,7 +16,7 @@ Correios API library for PHP
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
-    contract: 'contract',
+    postcard: 'postcard',
     isTestMode: true
 );
 
@@ -24,11 +24,14 @@ $correios = new \Correios\Correios(
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
-    contract: 'contract',
+    postcard: 'postcard',
     isTestMode: true,
-    token: 'string',
-    lotId: 'string'
+    token: 'string'
 );
+
+// Use um número de requisição e ID do lot personalizado - Use a custom request number and Lot ID
+$correios->setRequestNumber(requestNumber: '20230831');
+$correios->setLotId(requestNumber: '20230831LT');
 ```
 
 ### Rastro (Tracking)
@@ -64,7 +67,7 @@ $correios->price()->get(
     ],
     originCep:'71930000',
     destinyCep:'05336010',
-    contract: true,
+    postcard: '45655684865',
     dr: 20
 );
 ```
@@ -114,7 +117,7 @@ if (empty($responseBody)) {
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
-    contract: 'contract',
+    postcard: 'postcard',
     isTestMode: true
 );
 
@@ -129,7 +132,7 @@ $errors          = $correios->authentication()->getErrors();
 $correios = new \Correios\Correios(
     username: 'user',
     password: 'password',
-    contract: 'contract',
+    postcard: 'postcard',
     isTestMode: true
     token: 'eyJhbGciOiJSUzUxMiJ9.eyJhbWJpZW50ZSI6IlBST0RVQ0FPIiwiaWQiOiI0MDExMjE1NDAwMDE5MCIsInBmbCI6IlBKIiwiY25waiI6IjQwMTEyMTU0MDAwMTkwIiwiY29udHJhdG8iOnsibnVtZXJvIjoiOTkxMjYxNjgzOSIsImRyIjoyMCwiYXBpIjpbMjcsMzQsMzUsNDEsNzYsODcsNTY2XX0sImlwIjoiMTcwLjc4LjY4Ljg2LDE3MC43OC42OC44NiIsImlhdCI6MTY5MjY0MTU2MywiaXNzIjoidG9rZW4tc2VydmljZSIsImV4cCI6MTY5MjcyNzk2MywianRpIjoiZGViMTczM2EtYmVjYS00NmIyLWFkNGYtYWQ5ZjBkYWFlZjhlIn0.uxJCCQFj0c1qzI4BGk9JWTh6TT_Drp7YaMbKQoT9m-ie5wXRun4cOuQdbj28MQR3IYuntB2B9C8aqSoa_eXADtvf4J2H-ZTWS0wAnxsxxkNf1lXmHYrD2jCgRMVgQ_2dy40uBt0bJyk0M9e4jNg2almtZMlAwjbVrgSbopuNrqhHe49GuDIuQzJLqsNC60mA6KberD9eSSNZsvHbgNYQysK0mZTkIFdWy8DBJ7b5FrbLzbeikqKbRW9pDj_3Q-YrxhwQ79ZjEF8dLiAU3BcCDHwOxpSv6HKD5984mz1VppFXcaBAsqW6oB9iCHrENjVqtRXa8mx0nqbjelyz0Of6qA'
 );

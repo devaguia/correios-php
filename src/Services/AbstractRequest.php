@@ -3,7 +3,7 @@
 namespace Correios\Services;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Helpers\Settings;
+use Correios\Includes\Settings;
 use Correios\Services\Authorization\Authentication;
 use stdClass;
 
@@ -33,7 +33,7 @@ abstract class AbstractRequest
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->body));
         }
 
-        $response = json_decode(curl_exec($curl));
+        $response = json_decode(curl_exec($curl), false);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
@@ -57,13 +57,13 @@ abstract class AbstractRequest
 
     protected function getRequestUrl(string $endpoint): string
     {
-        $isTestMode = $this->getEnvironment() == 'sandbox';
+        $isTestMode = $this->getEnvironment() === 'sandbox';
 
         if (isset($this->authentication)) {
-            $isTestMode = $this->authentication->getEnvironment() == 'sandbox';
+            $isTestMode = $this->authentication->getEnvironment() === 'sandbox';
         }
 
-        return Settings::getEnvironmentUrl($isTestMode) . "/$endpoint";
+        return settings()->getEnvironmentUrl($isTestMode) . "/$endpoint";
     }
 
     protected function getEnvironment(): string

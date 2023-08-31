@@ -3,16 +3,20 @@
 use function Pest\Faker\fake;
 use Correios\Includes\Product;
 
-$weight = fake()->numberBetween(1,1000);
-$width  = fake()->randomFloat(1, 1, 100);
-$height = fake()->randomFloat(1, 1, 100);
-$length = fake()->randomFloat(1, 1, 100);
+$weight      = fake()->numberBetween(1,1000);
+$width       = fake()->randomFloat(1, 1, 100);
+$height      = fake()->randomFloat(1, 1, 100);
+$length      = fake()->randomFloat(1, 1, 100);
+$diameter    = fake()->randomFloat(1, 1, 100);
+$cubicWeight = fake()->randomFloat(1, 1, 100);
 
 dataset('weight', [$weight]);
 dataset('width', [$width]);
 dataset('height', [$height]);
 dataset('length', [$length]);
-dataset('product', [new Product($weight, $width, $height, $length)]);
+dataset('diameter', [$diameter]);
+dataset('cubicWeight', [$cubicWeight]);
+dataset('product', [new Product($weight, $width, $height, $length, $diameter, $cubicWeight)]);
 
 
 describe('weight property', function() {
