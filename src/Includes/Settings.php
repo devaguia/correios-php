@@ -4,7 +4,7 @@ namespace Correios\Includes;
 
 class Settings
 {
-    public static function getServiceCodes(): array
+    public function getServiceCodes(): array
     {
         return [
             '04162' => 'Código 01',
@@ -12,7 +12,7 @@ class Settings
         ];
     }
 
-    public static function getEnvironmentUrl(bool $isTestMode = false): string
+    public function getEnvironmentUrl(bool $isTestMode = false): string
     {
         return $isTestMode ? 'https://apihom.correios.com.br' : 'https://api.correios.com.br';
     }

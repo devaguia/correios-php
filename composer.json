@@ -26,7 +26,10 @@
   "autoload": {
     "psr-4": {
       "Correios\\": "src/"
-    }
+    },
+    "files": [
+      "src/Helpers/Settings.php"
+    ]
   },
   "require-dev": {
     "pestphp/pest": "^2.9",

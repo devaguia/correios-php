@@ -2,9 +2,13 @@
 
 namespace Correios;
 
-use Correios\Exceptions\InvalidCorreiosServiceCode;
-use Correios\Includes\Settings;
-use Correios\Services\{Address\Cep, Authorization\Authentication, Date\Date, Price\Price, Tracking\Tracking};
+use Correios\Services\{
+    Address\Cep,
+    Authorization\Authentication,
+    Date\Date,
+    Price\Price,
+    Tracking\Tracking
+};
 
 class Correios
 {
@@ -55,16 +59,6 @@ class Correios
         }
 
         $this->authentication->generateToken();
-    }
-
-    private function validateServiceCode(string $code): string
-    {
-        $codes = Settings::getServiceCodes();
-
-        if (!isset($codes[$code])) {
-            throw new InvalidCorreiosServiceCode($code);
-        }
-        return $code;
     }
 
     public function getErrors(): array

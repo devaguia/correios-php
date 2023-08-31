@@ -63,7 +63,7 @@ abstract class AbstractRequest
             $isTestMode = $this->authentication->getEnvironment() == 'sandbox';
         }
 
-        return Settings::getEnvironmentUrl($isTestMode) . "/$endpoint";
+        return settings()->getEnvironmentUrl($isTestMode) . "/$endpoint";
     }
 
     protected function getEnvironment(): string
