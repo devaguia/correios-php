@@ -19,6 +19,9 @@ abstract class AbstractRequest
     private string $endpoint;
     protected Authentication $authentication;
 
+    /**
+     * @throws \JsonException
+     */
     protected function sendRequest(): void
     {
         $url  = $this->getRequestUrl($this->endpoint);
@@ -33,7 +36,7 @@ abstract class AbstractRequest
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->body));
         }
 
-        $response = json_decode(curl_exec($curl));
+        $response = json_decode(curl_exec($curl), false, 512, JSON_THROW_ON_ERROR);
 
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
@@ -57,10 +60,10 @@ abstract class AbstractRequest
 
     protected function getRequestUrl(string $endpoint): string
     {
-        $isTestMode = $this->getEnvironment() == 'sandbox';
+        $isTestMode = $this->getEnvironment() === 'sandbox';
 
         if (isset($this->authentication)) {
-            $isTestMode = $this->authentication->getEnvironment() == 'sandbox';
+            $isTestMode = $this->authentication->getEnvironment() === 'sandbox';
         }
 
         return settings()->getEnvironmentUrl($isTestMode) . "/$endpoint";
