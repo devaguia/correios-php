@@ -8,7 +8,7 @@ class MissingProductParamException extends \InvalidArgumentException
     {
         parent::__construct(
             "O array de produtos deve obrigatoriamente possuir uma chave 'weight' com uma valor do tipo inteiro!",
-            1003
+            1004
         );
     }
 }

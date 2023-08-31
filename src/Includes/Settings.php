@@ -1,6 +1,6 @@
 <?php
 
-namespace Correios\Helpers;
+namespace Correios\Includes;
 
 class Settings
 {

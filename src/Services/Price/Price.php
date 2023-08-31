@@ -9,9 +9,11 @@ use Correios\Services\{
     AbstractRequest,
     Authorization\Authentication
 };
+use Correios\Includes\Traits\CepHandler;
 
 class Price extends AbstractRequest
 {
+    use CepHandler;
     private string $requestNumber;
     private string $lotId;
 
@@ -26,7 +28,7 @@ class Price extends AbstractRequest
         $this->setEnvironment($this->authentication->getEnvironment());
     }
 
-    private function buildBody(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract, int $dr): void
+    private function buildBody(array $serviceCodes, array $products, string $contract = '', int $dr = 0): void
     {
         $productParams = [];
 
@@ -35,10 +37,15 @@ class Price extends AbstractRequest
                 $productParam = [
                     "coProduto" => $service,
                     "psObjeto" => $product->getWeight(),
-                    "cepOrigem" => $originCep,
-                    "cepDestino" => $destinyCep,
+                    "cepOrigem" => $this->originCep,
+                    "cepDestino" => $this->destinyCep,
                     "nuRequisicao" => $this->requestNumber
                 ];
+
+                if ($contract && $dr) {
+                    $productParam['nuContrato'] = $contract;
+                    $productParam['nuDR'] = $dr;
+                }
 
                 $productParams[] = $this->setOptionalParams($product, $productParam);
             }
@@ -96,7 +103,6 @@ class Price extends AbstractRequest
 
         return $productList;
     }
-
     private function validateProductItem(array $product): array
     {
         $needed = [
@@ -108,7 +114,7 @@ class Price extends AbstractRequest
         ];
 
         foreach ($needed as $key) {
-            if (!isset($product[$key]) || !is_numeric($product)) {
+            if (!isset($product[$key]) || !is_numeric($product[$key])) {
                 $product[$key] = 0;
             }
         }
@@ -121,8 +127,8 @@ class Price extends AbstractRequest
             $this->buildBody(
                 $serviceCodes,
                 $this->buildProductList($products),
-                $originCep,
-                $destinyCep,
+                $this->validateCep($originCep),
+                $this->validateCep($destinyCep),
                 $contract,
                 $dr
             );

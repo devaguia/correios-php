@@ -3,14 +3,8 @@
 namespace Correios;
 
 use Correios\Exceptions\InvalidCorreiosServiceCode;
-use Correios\Helpers\Settings;
-use Correios\Services\{
-    Authorization\Authentication,
-    Address\Cep,
-    Date\Date,
-    Price\Price,
-    Tracking\Tracking
-};
+use Correios\Includes\Settings;
+use Correios\Services\{Address\Cep, Authorization\Authentication, Date\Date, Price\Price, Tracking\Tracking};
 
 class Correios
 {
