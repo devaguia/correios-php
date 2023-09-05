@@ -11,7 +11,7 @@ describe('cleanUp() method', function() {
     test('It should be possible to access the cleanUp() method', function(Cep $cep, string $postcode) {
         $cleanUp = $cep->cleanUp($postcode);
         expect($cleanUp)
-            ->not->toBeNull()
+            ->not->toBeEmpty()
             ->toBeString()
             ->toBe(preg_replace("/[^0-9.]/", '', $postcode));
     })->with('cep', 'postcode');
@@ -21,7 +21,7 @@ describe('validate() method', function() {
     test('It should be possible to access the validate() method', function(Cep $cep, string $postcode) {
         $object = $cep->validate($postcode);
         expect($object)
-            ->not->toBeNull()
+            ->not->toBeEmpty()
             ->toBeString()
             ->toBe(preg_replace("/[^0-9.]/", '', $postcode));
     })->with('cep', 'postcode');
