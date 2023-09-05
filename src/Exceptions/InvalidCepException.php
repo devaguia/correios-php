@@ -1,6 +1,6 @@
 <?php
 
-namespace WCCoreios\Exceptions;
+namespace Correios\Exceptions;
 
 class InvalidCepException extends \UnexpectedValueException
 {

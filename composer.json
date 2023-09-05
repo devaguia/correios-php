@@ -28,7 +28,8 @@
       "Correios\\": "src/"
     },
     "files": [
-      "src/Helpers/Settings.php"
+      "src/Helpers/Settings.php",
+      "src/Helpers/Cep.php"
     ]
   },
   "require-dev": {

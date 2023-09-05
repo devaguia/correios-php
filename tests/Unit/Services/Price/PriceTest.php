@@ -1,9 +1,18 @@
 <?php
-use Correios\Services\Tracking\Tracking;
+
+use Correios\Includes\Settings;
+use Correios\Services\Price\Price;
 use Correios\Services\Authorization\Authentication;
 use function Pest\Faker\fake;
 
-$trackingCode   = fake()->regexify('[0-9]{10}[A-Z]{5}');
+$settings     = new Settings();
+$serviceCodes = array_keys($settings->getServiceCodes());
+$serviceCode  = $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
+$originCep    = fake()->regexify('[0-9]{8}');
+$destinyCep   = fake()->regexify('[0-9]{8}');
+$contract     = fake()->regexify('[0-9]{10}');
+$dr           = fake()->numberBetween(1,99);
+
 $authentication = new Authentication(
     fake()->userName(),
     fake()->regexify('[0-9]{10}'),
@@ -11,81 +20,89 @@ $authentication = new Authentication(
     true
 );
 
+$price = new Price($authentication, time());
+
 dataset('authentication', [$authentication]);
-dataset('trackingCode', [$trackingCode]);
+dataset('price', [$price]);
+dataset('serviceCode', [$serviceCode]);
+dataset('originCep', [$originCep]);
+dataset('destinyCep', [$destinyCep]);
+dataset('contract', [$contract]);
+dataset('dr', [$dr]);
 
-test('It should be possible to instance the Tracking class without generate any errors', function(Authentication $authentication) {
-    $tracking = new Tracking($authentication);
-    expect($tracking)
-        ->toBeInstanceOf(Tracking::class);
-
-
+test('It should be possible to instance the Price class without generate any errors', function(Authentication $authentication) {
+    $price = new Price($authentication, time());
+    expect($price)
+        ->toBeInstanceOf(Price::class);
 })->with('authentication');
 
 describe('get() method', function() {
-    test('It should be possible to use the get() method without generate any Exception', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
+    test('It should be possible to use the get() method without generate any Exception', function(Price $price, string $serviceCode, string $destinyCep) {
         expect(
-            fn() => $tracking->get($trackingCode)
-        )->not->toThrow(Exception::class);
+            fn() => $price->get(
+                [$serviceCode],
+                [['weight' => fake()->randomFloat(1,1, 1000)]],
+                fake()->regexify('[0-9]{7}'),
+                $destinyCep
+            )
+        )->toThrow(\Correios\Exceptions\InvalidCepException::class);
 
-    })->with('authentication', 'trackingCode');
+    })->with('price', 'serviceCode', 'destinyCep');
 
-    test('The get() method must to return an array', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($tracking->get($trackingCode))
+    test('The get() method must to return an array', function(Price $price, string $serviceCode, string $originCep, string $destinyCep) {
+        $response = $price->get(
+            [$serviceCode],
+            [['weight' => fake()->randomFloat(1,1, 1000)]],
+            $originCep,
+            $destinyCep
+        );
+        expect($response)
             ->toBeArray();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price', 'serviceCode', 'originCep', 'destinyCep');
 });
 
 describe('getErrors() method', function() {
-    test('It should be possible to access the errors property using the getErrors() method', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getErrors())
+    test('It should be possible to access the errors property using the getErrors() method', function(Price $price) {
+        expect($price->getErrors())
             ->not->toBeNull();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 
-    test('The getErrors() method must return an array', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getErrors())
+    test('The getErrors() method must return an array', function(Price $price) {
+        expect($price->getErrors())
             ->not->toBeNull()
             ->toBeArray();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 });
 
 describe('getResponseBody() method', function() {
-    test('It should be possible to access the responseBody property using the getResponseBody() method', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getResponseBody())
+    test('It should be possible to access the responseBody property using the getResponseBody() method', function(Price $price) {
+        expect($price->getResponseBody())
             ->not->toBeNull();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 
-    test('The getResponseBody() method must return an instance of stdClass', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getResponseBody())
+    test('The getResponseBody() method must return an instance of stdClass', function(Price $price) {
+        expect($price->getResponseBody())
             ->not->toBeNull()
             ->toBeInstanceOf(stdClass::class);
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 });
 
 describe('getResponseCode() method', function() {
-    test('It should be possible to access the responseCode property using the getResponseCode() method', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getResponseCode())
+    test('It should be possible to access the responseCode property using the getResponseCode() method', function(Price $price) {
+        expect($price->getResponseCode())
             ->not->toBeNull();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 
-    test('The getResponseCode() method must return an int number', function(Authentication $authentication, string $trackingCode) {
-        $tracking = new Tracking($authentication);
-        expect($authentication->getResponseCode())
+    test('The getResponseCode() method must return an int number', function(Price $price) {
+        expect($price->getResponseCode())
             ->not->toBeNull()
             ->toBeInt();
 
-    })->with('authentication', 'trackingCode');
+    })->with('price');
 });
