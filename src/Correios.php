@@ -37,7 +37,7 @@ class Correios
 
     public function address(): Cep
     {
-        return new Cep;
+        return new Cep($this->authentication);
     }
 
     public function authentication(): Authentication
