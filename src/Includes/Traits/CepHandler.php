@@ -1,8 +1,8 @@
 <?php
 
 namespace Correios\Includes\Traits;
+
 use Correios\Exceptions\SameCepException;
-use Correios\Exceptions\InvalidCepException;
 
 trait CepHandler
 {

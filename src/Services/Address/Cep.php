@@ -3,8 +3,10 @@
 namespace Correios\Services\Address;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Services\AbstractRequest;
-use Correios\Services\Authorization\Authentication;
+use Correios\Services\{
+    AbstractRequest,
+    Authorization\Authentication
+};
 
 class Cep extends AbstractRequest
 {

@@ -1,8 +1,15 @@
 <?php
 
 use Correios\Includes\Settings;
-use Correios\Services\Date\Date;
-use Correios\Services\Authorization\Authentication;
+use Correios\Exceptions\{
+    InvalidCepException,
+    SameCepException
+};
+use Correios\Services\{
+    Date\Date,
+    Authorization\Authentication
+};
+
 use function Pest\Faker\fake;
 
 $settings     = new Settings();
@@ -58,7 +65,7 @@ describe('get() method', function() {
                 fake()->regexify('[0-9]{7}'),
                 $destinyCep
             )
-        )->toThrow(\Correios\Exceptions\InvalidCepException::class);
+        )->toThrow(InvalidCepException::class);
 
     })->with('authentication', 'serviceCode', 'destinyCep');
 
@@ -70,7 +77,7 @@ describe('get() method', function() {
                 $originCep,
                 $originCep
             )
-        )->toThrow(\Correios\Exceptions\SameCepException::class);
+        )->toThrow(SameCepException::class);
 
     })->with('authentication', 'serviceCode', 'originCep');
 

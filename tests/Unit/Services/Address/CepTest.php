@@ -1,8 +1,11 @@
 <?php
 
 use Correios\Exceptions\InvalidCepException;
-use Correios\Services\Address\Cep;
-use Correios\Services\Authorization\Authentication;
+use Correios\Services\{
+    Address\Cep,
+    Authorization\Authentication
+};
+
 use function Pest\Faker\fake;
 
 $cep = fake()->regexify('[0-9]{8}');

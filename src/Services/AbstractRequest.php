@@ -3,7 +3,6 @@
 namespace Correios\Services;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Includes\Settings;
 use Correios\Services\Authorization\Authentication;
 use stdClass;
 

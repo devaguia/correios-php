@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Faker\fake;
-
 test('It should be possible to access the global settings() method', function() {
     $exists = function_exists('settings');
     expect($exists)->toBeTruthy();

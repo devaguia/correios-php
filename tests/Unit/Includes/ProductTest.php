@@ -1,7 +1,7 @@
 <?php
 
-use function Pest\Faker\fake;
 use Correios\Includes\Product;
+use function Pest\Faker\fake;
 
 $weight      = fake()->numberBetween(1,1000);
 $width       = fake()->randomFloat(1, 1, 100);

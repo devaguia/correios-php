@@ -2,8 +2,8 @@
 
 namespace Correios\Services\Tracking;
 
-use Correios\Exceptions\ApiRequestException;
 use Correios\Services\AbstractRequest;
+use Correios\Exceptions\ApiRequestException;
 use Correios\Services\Authorization\Authentication;
 
 class Tracking extends AbstractRequest
