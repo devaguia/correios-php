@@ -1,5 +1,11 @@
 <?php
+
 use Correios\Correios;
+use Correios\Services\Address\Cep;
+use Correios\Services\Authorization\Authentication;
+use Correios\Services\Date\Date;
+use Correios\Services\Price\Price;
+use Correios\Services\Tracking\Tracking;
 use function Pest\Faker\fake;
 
 $username = fake()->userName();
@@ -30,7 +36,7 @@ describe('tracking() method', function() {
 
     test('The tracking() method should return an instance of Correios\Services\Tracking\Tracking', function(Correios $correios){
         expect($correios->tracking('AA123456789BR'))
-            ->toBeInstanceOf(\Correios\Services\Tracking\Tracking::class);
+            ->toBeInstanceOf(Tracking::class);
 
     })->with('correios');
 });
@@ -44,7 +50,7 @@ describe('price() method', function() {
 
     test('The price() method should return an instance of Correios\Services\Price\Price', function(Correios $correios){
         expect($correios->price())
-            ->toBeInstanceOf(\Correios\Services\Price\Price::class);
+            ->toBeInstanceOf(Price::class);
 
     })->with('correios');
 });
@@ -58,7 +64,7 @@ describe('date() method', function() {
 
     test('The date() method should return an instance of Correios\Services\Date\Date', function(Correios $correios){
         expect($correios->date())
-            ->toBeInstanceOf(\Correios\Services\Date\Date::class);
+            ->toBeInstanceOf(Date::class);
 
     })->with('correios');
 });
@@ -72,7 +78,7 @@ describe('address() method', function() {
 
     test('The address() method should return an instance of Correios\Services\Address\Cep', function(Correios $correios){
         expect($correios->address())
-            ->toBeInstanceOf(\Correios\Services\Address\Cep::class);
+            ->toBeInstanceOf(Cep::class);
 
     })->with('correios');
 });
@@ -86,7 +92,7 @@ describe('authentication() method', function() {
 
     test('The authentication() method should return an instance of Correios\Services\Authorization\Authentication', function(Correios $correios){
         expect($correios->authentication())
-            ->toBeInstanceOf(\Correios\Services\Authorization\Authentication::class);
+            ->toBeInstanceOf(Authentication::class);
 
     })->with('correios');
 });

@@ -2,7 +2,13 @@
 
 namespace Correios;
 
-use Correios\Services\{Address\Cep, Authorization\Authentication, Date\Date, Price\Price, Tracking\Tracking};
+use Correios\Services\{
+    Address\Cep,
+    Authorization\Authentication,
+    Date\Date,
+    Price\Price,
+    Tracking\Tracking
+};
 
 class Correios
 {

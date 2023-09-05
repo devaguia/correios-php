@@ -1,6 +1,10 @@
 <?php
-use Correios\Services\Tracking\Tracking;
-use Correios\Services\Authorization\Authentication;
+
+use Correios\Services\{
+    Tracking\Tracking,
+    Authorization\Authentication
+};
+
 use function Pest\Faker\fake;
 
 $trackingCode   = fake()->regexify('[0-9]{10}[A-Z]{5}');
@@ -18,7 +22,6 @@ test('It should be possible to instance the Tracking class without generate any 
     $tracking = new Tracking($authentication);
     expect($tracking)
         ->toBeInstanceOf(Tracking::class);
-
 
 })->with('authentication');
 

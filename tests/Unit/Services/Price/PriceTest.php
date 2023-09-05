@@ -1,9 +1,16 @@
 <?php
 
-use Correios\Exceptions\MissingProductParamException;
 use Correios\Includes\Settings;
-use Correios\Services\Price\Price;
-use Correios\Services\Authorization\Authentication;
+use Correios\Exceptions\{
+    InvalidCepException,
+    MissingProductParamException,
+    SameCepException
+};
+use Correios\Services\{
+    Price\Price,
+    Authorization\Authentication
+};
+
 use function Pest\Faker\fake;
 
 $settings     = new Settings();
@@ -61,7 +68,7 @@ describe('get() method', function() {
                 fake()->regexify('[0-9]{7}'),
                 $destinyCep
             )
-        )->toThrow(\Correios\Exceptions\InvalidCepException::class);
+        )->toThrow(InvalidCepException::class);
 
     })->with('authentication', 'serviceCode', 'destinyCep');
 
@@ -74,7 +81,7 @@ describe('get() method', function() {
                 $originCep,
                 $originCep
             )
-        )->toThrow(\Correios\Exceptions\SameCepException::class);
+        )->toThrow(SameCepException::class);
 
     })->with('authentication', 'serviceCode', 'originCep');
 
@@ -87,7 +94,7 @@ describe('get() method', function() {
                 $originCep,
                 $destinyCep
             )
-        )->toThrow(\Correios\Exceptions\MissingProductParamException::class);
+        )->toThrow(MissingProductParamException::class);
 
     })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
 

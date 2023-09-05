@@ -3,19 +3,18 @@
 namespace Correios\Services\Address;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Services\AbstractRequest;
-use Correios\Services\Authorization\Authentication;
+use Correios\Services\{
+    AbstractRequest,
+    Authorization\Authentication
+};
 
 class Cep extends AbstractRequest
 {
-    private $token;
-
     public function __construct(Authentication $authentication)
     {
         $this->authentication = $authentication;
         $this->setMethod('GET');
         $this->setEnvironment($this->authentication->getEnvironment());
-        $this->buildHeaders();
     }
 
     public function get(string $cep): array
@@ -34,12 +33,4 @@ class Cep extends AbstractRequest
             return [];
         }
     }
-
-    private function buildHeaders(): void
-    {
-        $this->setHeaders([
-            'Authorization' => 'Basic ' . $this->token,
-        ]);
-    }
-
 }

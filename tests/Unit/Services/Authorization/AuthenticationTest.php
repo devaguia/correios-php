@@ -1,4 +1,5 @@
 <?php
+
 use Correios\Services\Authorization\Authentication;
 use function Pest\Faker\fake;
 

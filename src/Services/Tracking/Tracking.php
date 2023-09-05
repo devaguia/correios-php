@@ -2,20 +2,17 @@
 
 namespace Correios\Services\Tracking;
 
-use Correios\Exceptions\ApiRequestException;
 use Correios\Services\AbstractRequest;
+use Correios\Exceptions\ApiRequestException;
 use Correios\Services\Authorization\Authentication;
 
 class Tracking extends AbstractRequest
 {
-    private $token;
-
     public function __construct(Authentication $authentication)
     {
         $this->authentication = $authentication;
         $this->setMethod('GET');
         $this->setEnvironment($this->authentication->getEnvironment());
-        $this->buildHeaders();
     }
 
     private function buildEndpoint(string $trackingCode, string $filtered): void
@@ -44,12 +41,4 @@ class Tracking extends AbstractRequest
             return [];
         }
     }
-
-    private function buildHeaders(): void
-    {
-        $this->setHeaders([
-            'Authorization' => 'Basic ' . $this->token,
-        ]);
-    }
-
 }

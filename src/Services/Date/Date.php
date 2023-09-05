@@ -3,13 +3,11 @@
 namespace Correios\Services\Date;
 
 use Correios\Exceptions\ApiRequestException;
-use Correios\Exceptions\MissingProductParamException;
-use Correios\Includes\Product;
+use Correios\Includes\Traits\CepHandler;
 use Correios\Services\{
     AbstractRequest,
     Authorization\Authentication
 };
-use Correios\Includes\Traits\CepHandler;
 
 class Date extends AbstractRequest
 {

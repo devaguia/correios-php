@@ -4,12 +4,12 @@ namespace Correios\Services\Price;
 
 use Correios\Exceptions\ApiRequestException;
 use Correios\Exceptions\MissingProductParamException;
+use Correios\Includes\Traits\CepHandler;
 use Correios\Includes\Product;
 use Correios\Services\{
     AbstractRequest,
     Authorization\Authentication
 };
-use Correios\Includes\Traits\CepHandler;
 
 class Price extends AbstractRequest
 {
