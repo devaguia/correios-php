@@ -1,5 +1,6 @@
 <?php
 
+use Correios\Exceptions\MissingProductParamException;
 use Correios\Includes\Settings;
 use Correios\Services\Price\Price;
 use Correios\Services\Authorization\Authentication;
@@ -8,6 +9,7 @@ use function Pest\Faker\fake;
 $settings     = new Settings();
 $serviceCodes = array_keys($settings->getServiceCodes());
 $serviceCode  = $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
+
 $originCep    = fake()->regexify('[0-9]{8}');
 $destinyCep   = fake()->regexify('[0-9]{8}');
 $contract     = fake()->regexify('[0-9]{10}');
@@ -75,6 +77,19 @@ describe('get() method', function() {
         )->toThrow(\Correios\Exceptions\SameCepException::class);
 
     })->with('authentication', 'serviceCode', 'originCep');
+
+    test('The get() method should generate a MissingProductParamException when we use a product without the weight value.', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
+        expect(
+            fn() => $price->get(
+                [$serviceCode],
+                [['width' => fake()->randomFloat(1,1, 1000)]],
+                $originCep,
+                $destinyCep
+            )
+        )->toThrow(\Correios\Exceptions\MissingProductParamException::class);
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
 
     test('The get() method must to return an array', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
         $price = new Price($authentication, time());
