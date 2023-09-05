@@ -1,5 +1,6 @@
 <?php
 
+use Correios\Exceptions\MissingProductParamException;
 use Correios\Includes\Settings;
 use Correios\Services\Price\Price;
 use Correios\Services\Authorization\Authentication;
@@ -8,6 +9,7 @@ use function Pest\Faker\fake;
 $settings     = new Settings();
 $serviceCodes = array_keys($settings->getServiceCodes());
 $serviceCode  = $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
+
 $originCep    = fake()->regexify('[0-9]{8}');
 $destinyCep   = fake()->regexify('[0-9]{8}');
 $contract     = fake()->regexify('[0-9]{10}');
@@ -37,7 +39,21 @@ test('It should be possible to instance the Price class without generate any err
 })->with('authentication');
 
 describe('get() method', function() {
-    test('It should be possible to use the get() method without generate any Exception', function(Price $price, string $serviceCode, string $destinyCep) {
+    test('It should be possible to use the get() method without generate any Exception', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
+        expect(
+            fn() => $price->get(
+                [$serviceCode],
+                [['weight' => fake()->randomFloat(1,1, 1000)]],
+                $originCep,
+                $destinyCep
+            )
+        )->not->toThrow(Exception::class);
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
+
+    test('The get() method should generate an InvalidCepException when we use an invalid CEP', function(Authentication $authentication, string $serviceCode, string $destinyCep) {
+        $price = new Price($authentication, time());
         expect(
             fn() => $price->get(
                 [$serviceCode],
@@ -47,9 +63,36 @@ describe('get() method', function() {
             )
         )->toThrow(\Correios\Exceptions\InvalidCepException::class);
 
-    })->with('price', 'serviceCode', 'destinyCep');
+    })->with('authentication', 'serviceCode', 'destinyCep');
 
-    test('The get() method must to return an array', function(Price $price, string $serviceCode, string $originCep, string $destinyCep) {
+    test('The get() method should generate a SameCepException when we use the same CEP for destiny and origin', function(Authentication $authentication, string $serviceCode, string $originCep) {
+        $price = new Price($authentication, time());
+        expect(
+            fn() => $price->get(
+                [$serviceCode],
+                [['weight' => fake()->randomFloat(1,1, 1000)]],
+                $originCep,
+                $originCep
+            )
+        )->toThrow(\Correios\Exceptions\SameCepException::class);
+
+    })->with('authentication', 'serviceCode', 'originCep');
+
+    test('The get() method should generate a MissingProductParamException when we use a product without the weight value.', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
+        expect(
+            fn() => $price->get(
+                [$serviceCode],
+                [['width' => fake()->randomFloat(1,1, 1000)]],
+                $originCep,
+                $destinyCep
+            )
+        )->toThrow(\Correios\Exceptions\MissingProductParamException::class);
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
+
+    test('The get() method must to return an array', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
         $response = $price->get(
             [$serviceCode],
             [['weight' => fake()->randomFloat(1,1, 1000)]],
@@ -59,7 +102,7 @@ describe('get() method', function() {
         expect($response)
             ->toBeArray();
 
-    })->with('price', 'serviceCode', 'originCep', 'destinyCep');
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
 });
 
 describe('getErrors() method', function() {
