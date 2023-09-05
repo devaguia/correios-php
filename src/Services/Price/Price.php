@@ -124,11 +124,12 @@ class Price extends AbstractRequest
     public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract = '', int $dr = 0): array
     {
         try {
+            $this->originCep  = $this->validateCep($originCep);
+            $this->destinyCep = $this->validateCep($destinyCep);
+
             $this->buildBody(
                 $serviceCodes,
                 $this->buildProductList($products),
-                $this->validateCep($originCep),
-                $this->validateCep($destinyCep),
                 $contract,
                 $dr
             );
