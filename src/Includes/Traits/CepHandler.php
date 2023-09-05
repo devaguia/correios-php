@@ -2,7 +2,7 @@
 
 namespace Correios\Includes\Traits;
 use Correios\Exceptions\SameCepException;
-use WCCoreios\Exceptions\InvalidCepException;
+use Correios\Exceptions\InvalidCepException;
 
 trait CepHandler
 {
