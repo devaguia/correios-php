@@ -154,6 +154,18 @@ Durante o desenvolvimento, pedimos que use o plugin SonarLint, para que ele veri
 
 <br/>
 
+### Instalação - Installation
+
+Installing the composer dependencies
+```shell
+composer install
+```
+
+Running the unit tests
+```shell
+composer test
+```
+
 <h2 id="tree">File Tree</h2>
 
 ```
