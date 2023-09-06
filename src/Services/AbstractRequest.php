@@ -25,10 +25,10 @@ abstract class AbstractRequest
 
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->getHeaders());
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         if ($this->method === 'POST') {
             curl_setopt($curl, CURLOPT_POST, true);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->body));
         }
 
@@ -38,7 +38,6 @@ abstract class AbstractRequest
 
         curl_close($curl);
 
-        
         $data = is_object($response) ? $response : (object) $response;
 
         $this->responseBody = $data;
@@ -87,20 +86,20 @@ abstract class AbstractRequest
 
     protected function setHeaders(array $headers): void
     {
-        $this->headers = array_merge($headers, [
-            'Content-Type'  => 'application/json'
-        ]);
-
-        if (isset($this->authentication)) {
-            $this->headers['Authorization'] = 'Bearer ' . $this->authentication->getToken();
-        }
+        $this->headers = array_merge($headers, $this->headers);
     }
 
     protected function getHeaders(): array
     {
         $headers = [];
+
+        if (isset($this->authentication)) {
+            $this->headers['Authorization'] = 'Bearer ' . $this->authentication->getToken();
+            $this->headers['Content-Type']  = 'application/json';
+        }
+
         foreach ($this->headers as $key => $header) {
-            $headers[] = "$key: $header";
+            $headers[] = "$key:$header";
         }
 
         return $headers;

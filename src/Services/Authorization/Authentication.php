@@ -19,7 +19,7 @@ class Authentication extends AbstractRequest
         $this->contract = $contract;
 
         $this->setEnvironment($isTestMode ? 'sandbox' : 'production');
-        $this->setEndpoint('token/v1/autentica/contrato');
+        $this->setEndpoint('token/v1/autentica/cartaopostagem');
         $this->setMethod('POST');
 
         $this->buildBody();
@@ -36,7 +36,8 @@ class Authentication extends AbstractRequest
     private function buildHeaders(): void
     {
         $this->setHeaders([
-            'Authorization' => 'Basic ' . base64_encode("$this->username:$this->password")
+            'Authorization' => 'Basic ' . base64_encode("$this->username:$this->password"),
+            'Content-Type'  => 'application/json'
         ]);
     }
 
