@@ -58,7 +58,6 @@ $correios->price()->get(
     products:[
         [
           'weight'      => 300,
-          'type'        => "string",
           'length'      => 0,
           'height'      => 200,
           'width'       => 200,
