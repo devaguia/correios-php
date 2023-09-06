@@ -13,6 +13,10 @@ use Correios\Services\{
 class Correios
 {
     private Authentication $authentication;
+    private Price $price;
+    private Date $date;
+    private Cep $address;
+    private Tracking $tracking;
     private string $requestNumber;
     private string $lotId;
     private string $postcard;
@@ -26,24 +30,40 @@ class Correios
         $this->authenticate($username, $password, $postcard, $isTestMode, $token);
     }
 
-    public function tracking(): Tracking
+    public function tracking(bool $reset = false): Tracking
     {
-        return new Tracking($this->authentication);
+        if(!isset($this->tracking) || $reset) {
+            $this->tracking = new Tracking($this->authentication);
+        }
+
+        return $this->tracking;
     }
 
-    public function price(): Price
+    public function price(bool $reset = false): Price
     {
-        return new Price($this->authentication, $this->requestNumber);
+        if(!isset($this->price) || $reset) {
+            $this->price = new Price($this->authentication, $this->requestNumber);
+        }
+
+        return $this->price;
     }
 
-    public function date(): Date
+    public function date(bool $reset = false): Date
     {
-        return new Date($this->authentication, $this->requestNumber);
+        if(!isset($this->date) || $reset) {
+            $this->date = new Date($this->authentication, $this->requestNumber);
+        }
+
+        return $this->date;
     }
 
-    public function address(): Cep
+    public function address(bool $reset = false): Cep
     {
-        return new Cep($this->authentication);
+        if(!isset($this->address) || $reset) {
+            $this->address = new Cep($this->authentication);
+        }
+
+        return $this->address;
     }
 
     public function authentication(): Authentication

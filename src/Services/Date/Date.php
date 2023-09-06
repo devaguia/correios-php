@@ -40,9 +40,8 @@ class Date extends AbstractRequest
         }
         $this->setBody([
             'idLote' => $this->lotId,
-            'parametrosProduto' => $productParams,
+            'parametrosPrazo' => $productParams,
         ]);
-
     }
 
     public function get(array $serviceCodes, string $originCep, string $destinyCep): array
