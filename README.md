@@ -144,7 +144,13 @@ $correios = new \Correios\Correios(
 
 <h2 id="contribute">Contribua - Contribute</h2>
 
-Por favor leia os arquivos de **[Manual de contribuição](CONTRIBUTING.md)** e **[Código de Conduta](CODE_OF_CONDUCT.md)**
+Por favor, se for contribuir, leia os arquivos de **[Manual de contribuição](CONTRIBUTING.md)** e **[Código de Conduta](CODE_OF_CONDUCT.md)**.
+
+### SonarLint
+Durante o desenvolvimento, pedimos que use o plugin SonarLint, para que ele verifique a qualidade do código que está sendo desenvolvido - During development, we request that you use the SonarLint plugin to check the quality of the code being developed:
+
+* [VSCode](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
+* [PHPStorm](https://plugins.jetbrains.com/plugin/7973-sonarlint)
 
 <br/>
 
