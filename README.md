@@ -145,9 +145,9 @@ $correios = new \Correios\Correios(
 
 ```
 .
+├── CODE_OF_CONDUCT.md
 ├── composer.json
-├── composer.lock
-├── correios.php
+├── CONTRIBUTING.md
 ├── LICENSE
 ├── phpunit.xml
 ├── phpunit.xml.bak
@@ -156,12 +156,19 @@ $correios = new \Correios\Correios(
 │   ├── Correios.php
 │   ├── Exceptions
 │   │   ├── ApiRequestException.php
-│   │   └── InvalidCorreiosServiceCode.php
+│   │   ├── InvalidCepException.php
+│   │   ├── InvalidCorreiosServiceCode.php
+│   │   ├── MissingProductParamException.php
+│   │   └── SameCepException.php
 │   ├── Helpers
+│   │   ├── Cep.php
 │   │   └── Settings.php
 │   ├── Includes
-│   │   ├── Address.php
-│   │   └── Product.php
+│   │   ├── Cep.php
+│   │   ├── Product.php
+│   │   ├── Settings.php
+│   │   └── Traits
+│   │       └── CepHandler.php
 │   └── Services
 │       ├── AbstractRequest.php
 │       ├── Address
@@ -175,14 +182,15 @@ $correios = new \Correios\Correios(
 │       └── Tracking
 │           └── Tracking.php
 └── tests
-    ├── Feature
     └── Unit
         ├── CorreiosTest.php
         ├── Helpers
+        │   ├── CepTest.php
         │   └── SettingsTest.php
         ├── Includes
-        │   ├── AddressTest.php
-        │   └── ProductTest.php
+        │   ├── CepTest.php
+        │   ├── ProductTest.php
+        │   └── SettingsTest.php
         └── Services
             ├── Address
             │   └── CepTest.php
