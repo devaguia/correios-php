@@ -4,6 +4,7 @@ Correios API library for PHP
 * **[Utilização Básica (Basic Usage)](#usage)**
 * **[Respostas API (API Response)](#response)**
 * **[Autenticação (Authentication)](#auth)**
+* **[Contribua - Contribute](#contribute)**
 * **[Árvore de Arquivos (File Tree)](#tree)**
 
 <br/>
@@ -138,6 +139,12 @@ $correios = new \Correios\Correios(
 );
 
 ```
+
+<br/>
+
+<h2 id="contribute">Contribua - Contribute</h2>
+
+Por favor leia os arquivos de **[Manual de contribuição](CONTRIBUTING.md)** e **[Código de Conduta](CODE_OF_CONDUCT.md)**
 
 <br/>
 
