@@ -48,7 +48,6 @@ class Price extends AbstractRequest
                 }
                 
                 $vlDeclarado = $product->getVlDeclarado();
-                var_dump($product->getVlDeclaradoCodigo());
                 if ($vlDeclarado > 0){
                     $productParam['servicosAdicionais'] = [$product->getVlDeclaradoCodigo()];
                     $productParam['vlDeclarado'] = $vlDeclarado;
