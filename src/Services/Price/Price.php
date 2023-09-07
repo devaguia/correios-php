@@ -46,10 +46,19 @@ class Price extends AbstractRequest
                     $productParam['nuContrato'] = $contract;
                     $productParam['nuDR'] = $dr;
                 }
+                
+                $vlDeclarado = $product->getVlDeclarado();
+                var_dump($product->getVlDeclaradoCodigo());
+                if ($vlDeclarado > 0){
+                    $productParam['servicosAdicionais'] = [$product->getVlDeclaradoCodigo()];
+                    $productParam['vlDeclarado'] = $vlDeclarado;
+   
+                }
 
                 $productParams[] = $this->setOptionalParams($product, $productParam);
             }
         }
+
         $this->setBody([
             'idLote' => $this->lotId,
             'parametrosProduto' => $productParams,
@@ -97,7 +106,9 @@ class Price extends AbstractRequest
                 $product['height'],
                 $product['length'],
                 $product['diameter'],
-                $product['cubicWeight']
+                $product['cubicWeight'],
+                $product['vlDeclarado'],
+                $product['vlDeclaradoCodigo']
             );
         }
 
@@ -110,7 +121,9 @@ class Price extends AbstractRequest
             'height',
             'length',
             'diameter',
-            'cubicWeight'
+            'cubicWeight',
+            'vlDeclarado',
+            'vlDeclaradoCodigo'
         ];
 
         foreach ($needed as $key) {
