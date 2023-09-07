@@ -62,7 +62,9 @@ $correios->price()->get(
           'height'      => 200,
           'width'       => 200,
           'diameter'    => 0,
-          'cubicWeight' => 0
+          'cubicWeight' => 0,
+          'vlDeclarado' => 0,
+          'vlDeclaradoCodigo => ''
         ]
     ],
     originCep:'71930000',
