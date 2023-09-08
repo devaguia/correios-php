@@ -10,6 +10,8 @@ class Product
     private float $length;
     private float $diameter;
     private float $cubicWeight;
+    private float $vlDeclarado;
+    private string $vlDeclaradoCodigo;
 
     public function __construct(
         float $weight,
@@ -17,7 +19,9 @@ class Product
         float $height = 0,
         float $length = 0,
         float $diameter = 0,
-        float $cubicWeight = 0
+        float $cubicWeight = 0,
+        float $vlDeclarado = 0,
+        string $vlDeclaradoCodigo = ""
     ) {
         $this->weight      = $weight;
         $this->width       = $width;
@@ -25,6 +29,8 @@ class Product
         $this->length      = $length;
         $this->diameter    = $diameter;
         $this->cubicWeight = $cubicWeight;
+        $this->vlDeclarado = $vlDeclarado;
+        $this->vlDeclaradoCodigo = $vlDeclaradoCodigo;
     }
 
     public function getWeight(): float
@@ -55,5 +61,15 @@ class Product
     public function getCubicWeight(): float
     {
         return $this->cubicWeight;
+    }
+
+    public function getVlDeclarado(): float
+    {
+        return $this->vlDeclarado;
+    }
+
+    public function getVlDeclaradoCodigo(): string
+    {
+        return $this->vlDeclaradoCodigo;
     }
 }
