@@ -15,12 +15,10 @@ use function Pest\Faker\fake;
 
 $settings     = new Settings();
 $serviceCodes = array_keys($settings->getServiceCodes());
-$serviceCode  = $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
+$serviceCode  = (string) $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
 
 $originCep    = fake()->regexify('[0-9]{8}');
 $destinyCep   = fake()->regexify('[0-9]{8}');
-$contract     = fake()->regexify('[0-9]{10}');
-$dr           = fake()->numberBetween(1,99);
 
 $authentication = new Authentication(
     fake()->userName(),
@@ -36,8 +34,6 @@ dataset('price', [$price]);
 dataset('serviceCode', [$serviceCode]);
 dataset('originCep', [$originCep]);
 dataset('destinyCep', [$destinyCep]);
-dataset('contract', [$contract]);
-dataset('dr', [$dr]);
 
 test('It should be possible to instance the Price class without generate any errors', function(Authentication $authentication) {
     $price = new Price($authentication, time());
@@ -95,6 +91,23 @@ describe('get() method', function() {
                 $destinyCep
             )
         )->toThrow(MissingProductParamException::class);
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
+
+    test('It should be possible to usa additional fields using the $fields param', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
+        $response = $price->get(
+            [$serviceCode],
+            [['weight' => fake()->randomFloat(1,1, 1000)]],
+            $originCep,
+            $destinyCep,
+            [
+                'nuContrato' => fake()->regexify('[0-9]{10}')
+            ]
+        );
+
+        expect($response)
+            ->toBeArray();
 
     })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
 

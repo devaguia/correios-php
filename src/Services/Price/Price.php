@@ -28,7 +28,7 @@ class Price extends AbstractRequest
         $this->setEnvironment($this->authentication->getEnvironment());
     }
 
-    private function buildBody(array $serviceCodes, array $products, string $contract = '', int $dr = 0): void
+    private function buildBody(array $serviceCodes, array $products, array $fields): void
     {
         $productParams = [];
 
@@ -42,19 +42,7 @@ class Price extends AbstractRequest
                     "nuRequisicao" => $this->requestNumber
                 ];
 
-                if ($contract && $dr) {
-                    $productParam['nuContrato'] = $contract;
-                    $productParam['nuDR'] = $dr;
-                }
-                
-                $vlDeclarado = $product->getVlDeclarado();
-                if ($vlDeclarado > 0){
-                    $productParam['servicosAdicionais'] = [$product->getVlDeclaradoCodigo()];
-                    $productParam['vlDeclarado'] = $vlDeclarado;
-   
-                }
-
-                $productParams[] = $this->setOptionalParams($product, $productParam);
+                $productParams[] = array_merge($fields, $this->setOptionalParams($product, $productParam));
             }
         }
 
@@ -62,7 +50,6 @@ class Price extends AbstractRequest
             'idLote' => $this->lotId,
             'parametrosProduto' => $productParams,
         ]);
-
     }
 
     private function setOptionalParams(Product $product, array $productParam): array
@@ -105,9 +92,7 @@ class Price extends AbstractRequest
                 $product['height'],
                 $product['length'],
                 $product['diameter'],
-                $product['cubicWeight'],
-                $product['vlDeclarado'],
-                $product['vlDeclaradoCodigo']
+                $product['cubicWeight']
             );
         }
 
@@ -120,9 +105,7 @@ class Price extends AbstractRequest
             'height',
             'length',
             'diameter',
-            'cubicWeight',
-            'vlDeclarado',
-            'vlDeclaradoCodigo'
+            'cubicWeight'
         ];
 
         foreach ($needed as $key) {
@@ -133,7 +116,7 @@ class Price extends AbstractRequest
 
         return $product;
     }
-    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, string $contract = '', int $dr = 0): array
+    public function get(array $serviceCodes, array $products, string $originCep, string $destinyCep, array $fields = []): array
     {
         try {
             $this->originCep  = $this->validateCep($originCep);
@@ -142,8 +125,7 @@ class Price extends AbstractRequest
             $this->buildBody(
                 $serviceCodes,
                 $this->buildProductList($products),
-                $contract,
-                $dr
+                $fields
             );
 
             $this->sendRequest();
