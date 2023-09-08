@@ -67,8 +67,10 @@ $correios->price()->get(
     ],
     originCep:'71930000',
     destinyCep:'05336010',
-    postcard: '45655684865',
-    dr: 20
+    fields: [
+        'nuContrato' => '0000000000',
+        'nuDR' => 20
+    ]
 );
 ```
 
@@ -86,7 +88,9 @@ $correios->date()->get(
     serviceCodes:['04162'],
     originCep:'71930000',
     destinyCep:'05336010',
-    postDate: '2023-01-01T01:01:01.001Z'
+    fields: [
+        'dtEvento' => '2023-01-01T01:01:01.001Z',
+    ]
 );
 ```
 
