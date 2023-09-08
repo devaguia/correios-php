@@ -19,7 +19,6 @@ jobs:
       - name: Removing development folders 🗑️
         run: |
           rm -r -f tests/
-          rm -r -f vendor/
 
       - name: Removing development files 🗑️
         run: |
