@@ -18,7 +18,7 @@ class Date extends AbstractRequest
     public function __construct(Authentication $authentication, string $requestNumber, string $lotId = '')
     {
         $this->requestNumber = $requestNumber;
-        $this->lotId = $lotId ?? $requestNumber . 'LT';
+        $this->lotId = $lotId ?: $requestNumber . 'LT';
         $this->authentication = $authentication;
 
         $this->setMethod('POST');
