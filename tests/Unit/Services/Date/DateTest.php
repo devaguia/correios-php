@@ -81,6 +81,22 @@ describe('get() method', function() {
 
     })->with('authentication', 'serviceCode', 'originCep');
 
+    test('It should be possible to usa additional fields using the $fields param', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Date($authentication, time());
+        $response = $price->get(
+            [$serviceCode],
+            $originCep,
+            $destinyCep,
+            [
+                'nuContrato' => fake()->regexify('[0-9]{10}')
+            ]
+        );
+
+        expect($response)
+            ->toBeArray();
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
+
     test('The get() method must to return an array', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
         $date = new Date($authentication, time());
         $response = $date->get(

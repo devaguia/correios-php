@@ -26,31 +26,33 @@ class Date extends AbstractRequest
         $this->setEnvironment($this->authentication->getEnvironment());
     }
 
-    private function buildBody(array $serviceCodes): void
+    private function buildBody(array $serviceCodes, array $fields = []): void
     {
         $productParams = [];
 
         foreach ($serviceCodes as $service) {
-            $productParams[] = [
+            $productParam = [
                 "coProduto" => $service,
                 "cepOrigem" => $this->originCep,
                 "cepDestino" => $this->destinyCep,
                 "nuRequisicao" => $this->requestNumber
             ];
+            $productParams[] = array_merge($fields, $productParam);
         }
+
         $this->setBody([
             'idLote' => $this->lotId,
-            'parametrosPrazo' => $productParams,
+            'parametrosPrazo' => $productParams
         ]);
     }
 
-    public function get(array $serviceCodes, string $originCep, string $destinyCep): array
+    public function get(array $serviceCodes, string $originCep, string $destinyCep, array $fields = []): array
     {
         try {
             $this->originCep  = $this->validateCep($originCep);
             $this->destinyCep = $this->validateCep($destinyCep);
 
-            $this->buildBody($serviceCodes);
+            $this->buildBody($serviceCodes, $fields);
             $this->sendRequest();
 
             return [
