@@ -14,7 +14,7 @@ use function Pest\Faker\fake;
 
 $settings     = new Settings();
 $serviceCodes = array_keys($settings->getServiceCodes());
-$serviceCode  = $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
+$serviceCode  = (string) $serviceCodes[fake()->numberBetween(0, count($serviceCodes) - 1)];
 
 $originCep    = fake()->regexify('[0-9]{8}');
 $destinyCep   = fake()->regexify('[0-9]{8}');
