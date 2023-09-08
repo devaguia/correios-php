@@ -19,13 +19,12 @@ class Correios
     private Tracking $tracking;
     private string $requestNumber;
     private string $lotId;
-    private string $postcard;
     private array $errors = [];
 
     public function __construct(string $username, string $password, string $postcard, bool $isTestMode = false, string $token = '')
     {
         $this->requestNumber = time();
-        $this->postcard      = $postcard;
+        $this->lotId         = '';
 
         $this->authenticate($username, $password, $postcard, $isTestMode, $token);
     }
@@ -42,7 +41,7 @@ class Correios
     public function price(bool $reset = false): Price
     {
         if(!isset($this->price) || $reset) {
-            $this->price = new Price($this->authentication, $this->requestNumber);
+            $this->price = new Price($this->authentication, $this->requestNumber, $this->lotId);
         }
 
         return $this->price;
@@ -51,7 +50,7 @@ class Correios
     public function date(bool $reset = false): Date
     {
         if(!isset($this->date) || $reset) {
-            $this->date = new Date($this->authentication, $this->requestNumber);
+            $this->date = new Date($this->authentication, $this->requestNumber, $this->lotId);
         }
 
         return $this->date;

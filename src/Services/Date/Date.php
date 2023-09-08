@@ -15,10 +15,10 @@ class Date extends AbstractRequest
     private string $requestNumber;
     private string $lotId;
 
-    public function __construct(Authentication $authentication, string $requestNumber)
+    public function __construct(Authentication $authentication, string $requestNumber, string $lotId = '')
     {
         $this->requestNumber = $requestNumber;
-        $this->lotId = $requestNumber . 'LT';
+        $this->lotId = $lotId ?? $requestNumber . 'LT';
         $this->authentication = $authentication;
 
         $this->setMethod('POST');
