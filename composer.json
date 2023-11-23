@@ -1,5 +1,5 @@
 {
-  "name": "devaguia/correios",
+  "name": "devaguia/correios-php",
   "version": "1.0.0",
   "description": "Correios API library for PHP",
   "license": "GPL-3.0",
@@ -7,8 +7,8 @@
     "test": "./vendor/bin/pest"
   },
   "support": {
-    "issues": "https://github.com/aguiarrdev/correios/issues",
-    "source": "https://github.com/aguiarrdev/correios"
+    "issues": "https://github.com/devaguia/correios/issues",
+    "source": "https://github.com/devaguia/correios"
   },
   "keywords": [
     "library",
