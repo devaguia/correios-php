@@ -19,7 +19,7 @@ class Tracking extends AbstractRequest
     {
         $endpoint = 'srorastro/v1/objetos/' . $trackingCode;
         if ($filtered) {
-            $endpoint .= '?resultado=U';
+            $endpoint .= "?resultado=$filtered";
         }
 
         $this->setEndpoint($endpoint);

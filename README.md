@@ -37,7 +37,10 @@ $correios->setLotId(requestNumber: '20230831LT');
 
 ### Rastro (Tracking)
 ```PHP
-$response = $correios->tracking()->get(trackingCode: 'AASD546115A');
+$response = $correios->tracking()->get(
+    trackingCode: 'AASD546115A',
+    filtered: 'U'
+);
 ```
 
 ### Preço (Price)
