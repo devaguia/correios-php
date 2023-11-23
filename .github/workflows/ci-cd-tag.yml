@@ -45,3 +45,12 @@ jobs:
           git push origin v$TAG_VERSION
 
           echo "All right! 🎉"
+
+      - name: Update the packagist version ⬆️
+        run: |
+          curl \
+            -X POST \
+            -H "Content Type: application/json" \
+            -H "Secret: ${{ secrets.PACKAGISTTOKEN }}" \
+            https://packagist.org/api/github?username=devaguia
+            
