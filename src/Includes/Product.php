@@ -10,6 +10,13 @@ class Product
     private float $length;
     private float $diameter;
     private float $cubicWeight;
+    /**
+     * @var int Tipo do objeto.
+     * 1 - Envelope (Default);
+     * 2 - Caixa;
+     * 3 - Rolo
+     */
+    private int $objectType;
 
     public function __construct(
         float $weight,
@@ -17,7 +24,8 @@ class Product
         float $height = 0,
         float $length = 0,
         float $diameter = 0,
-        float $cubicWeight = 0
+        float $cubicWeight = 0,
+        int   $objectType = 1
     ) {
         $this->weight      = $weight;
         $this->width       = $width;
@@ -25,6 +33,7 @@ class Product
         $this->length      = $length;
         $this->diameter    = $diameter;
         $this->cubicWeight = $cubicWeight;
+        $this->objectType  = $objectType;
     }
 
     public function getWeight(): float
@@ -55,5 +64,10 @@ class Product
     public function getCubicWeight(): float
     {
         return $this->cubicWeight;
+    }
+
+    public function getObjectType(): int
+    {
+        return $this->objectType;
     }
 }
