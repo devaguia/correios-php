@@ -10,12 +10,6 @@ class Product
     private float $length;
     private float $diameter;
     private float $cubicWeight;
-    /**
-     * @var int Tipo do objeto.
-     * 1 - Envelope (Default);
-     * 2 - Caixa;
-     * 3 - Rolo
-     */
     private int $objectType;
 
     public function __construct(
