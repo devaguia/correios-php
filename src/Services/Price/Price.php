@@ -74,6 +74,10 @@ class Price extends AbstractRequest
             $productParam['cubicWeight'] = $product->getCubicWeight();
         }
 
+        if ($product->getObjectType() > 1 && $product->getObjectType() <= 3) {
+            $productParam['tpObjeto'] = $product->getObjectType();
+        }
+
         return $productParam;
     }
 
@@ -92,7 +96,8 @@ class Price extends AbstractRequest
                 $product['height'],
                 $product['length'],
                 $product['diameter'],
-                $product['cubicWeight']
+                $product['cubicWeight'],
+                $product['objectType'],
             );
         }
 
@@ -105,12 +110,13 @@ class Price extends AbstractRequest
             'height',
             'length',
             'diameter',
-            'cubicWeight'
+            'cubicWeight',
+            'objectType'
         ];
 
         foreach ($needed as $key) {
             if (!isset($product[$key]) || !is_numeric($product[$key])) {
-                $product[$key] = 0;
+                $product[$key] = $key == 'objectType' ? 1 : 0;
             }
         }
 

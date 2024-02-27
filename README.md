@@ -65,7 +65,9 @@ $correios->price()->get(
           'height'      => 200,
           'width'       => 200,
           'diameter'    => 0,
-          'cubicWeight' => 0
+          'cubicWeight' => 0,
+          /** 1 - Envelope (Default); 2 - Caixa; 3 - Rolo*/
+          'objectType' => 2
         ]
     ],
     originCep:'71930000',
