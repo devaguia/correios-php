@@ -9,6 +9,8 @@ class Authentication extends AbstractRequest
 {
     private string $username;
     private string $password;
+    private string $dr;
+    private object $cartaoPostagem;
     private string $contract;
     private string $token;
     private \DateTime $tokenExpiration;
@@ -17,6 +19,7 @@ class Authentication extends AbstractRequest
         $this->username = $username;
         $this->password = $password;
         $this->contract = $contract;
+        $this->cartaoPostagem = (object) [];
 
         $this->setEnvironment($isTestMode ? 'sandbox' : 'production');
         $this->setEndpoint('token/v1/autentica/cartaopostagem');
@@ -51,11 +54,31 @@ class Authentication extends AbstractRequest
                 $this->token = $data->token;
                 $this->tokenExpiration = new \DateTime($data->expiraEm);
             }
-
+            // Set DR and Contract
+            if (isset($data->cartaoPostagem->dr) && isset($data->cartaoPostagem->contrato)) {
+                $this->cartaoPostagem->dr = $data->cartaoPostagem->dr;
+                $this->cartaoPostagem->contract = $data->cartaoPostagem->contrato;
+            }
         } catch (ApiRequestException $e) {
             $this->errors[$e->getCode()] = $e->getMessage();
         }
     }
+
+    public function setCartaoPostagem(object $cartaoPostagem): void
+    {
+        $this->cartaoPostagem = $cartaoPostagem;
+    }
+
+    public function getDr(): string
+    {
+        return $this->cartaoPostagem->dr ?? '';
+    }
+
+    public function getContract(): string
+    {
+        return $this->cartaoPostagem->contract ?? '';
+    }
+
     public function getToken(): string
     {
         return $this->token ?? '';
