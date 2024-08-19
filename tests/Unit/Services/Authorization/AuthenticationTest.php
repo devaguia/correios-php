@@ -7,11 +7,13 @@ $username = fake()->userName();
 $contract = fake()->regexify('[0-9]{10}');
 $password = fake()->password();
 $token    = fake()->regexify('[0-9]{10}[A-Z]{5}[a-z]{5}');
+$dr       = fake()->regexify('[0-9]{10}');
 
 dataset('username', [$username]);
 dataset('password', [$password]);
 dataset('contract', [$contract]);
 dataset('token', [$token]);
+dataset('dr', [$dr]);
 
 test('It should be possible instance the authentication class without generate any errors in the array list', function(string $username, string $password, string $contract) {
     $authentication = new Authentication($username, $password, $contract, true);
@@ -128,6 +130,51 @@ describe('getResponseCode() method', function() {
         expect($authentication->getResponseCode())
             ->not->toBeNull()
             ->toBeInt();
+
+    })->with('username', 'password', 'contract');
+});
+
+
+describe('getDr() method', function() {
+    test('It should be possible to use the getDr() method', function(string $username, string $password, string $contract) {
+        $authentication = new Authentication($username, $password, $contract, true);
+        $authentication->getToken();
+
+        expect(fn() =>
+        $authentication->getDr()
+        )->not->toThrow(Exception::class);
+
+    })->with('username', 'password', 'contract');
+
+    test('The getDr() method must return a string', function(string $username, string $password, string $contract) {
+        $authentication = new Authentication($username, $password, $contract, true);
+        $authentication->getToken();
+
+        expect($authentication->getDr())
+            ->not->toBeNull()
+            ->toBeString();
+
+    })->with('username', 'password', 'contract');
+});
+
+describe('getContract() method', function() {
+    test('It should be possible to use the getContract() method', function(string $username, string $password, string $contract) {
+        $authentication = new Authentication($username, $password, $contract, true);
+        $authentication->getToken();
+        
+        expect(fn() =>
+        $authentication->getToken()
+        )->not->toThrow(Exception::class);
+
+    })->with('username', 'password', 'contract');
+
+    test('The getContract() method must return a string', function(string $username, string $password, string $contract) {
+        $authentication = new Authentication($username, $password, $contract, true);
+        $authentication->getToken();
+
+        expect($authentication->getContract())
+            ->not->toBeNull()
+            ->toBeString();
 
     })->with('username', 'password', 'contract');
 });
