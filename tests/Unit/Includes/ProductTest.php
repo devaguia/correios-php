@@ -9,6 +9,7 @@ $height      = fake()->randomFloat(1, 1, 100);
 $length      = fake()->randomFloat(1, 1, 100);
 $diameter    = fake()->randomFloat(1, 1, 100);
 $cubicWeight = fake()->randomFloat(1, 1, 100);
+$objectType  = fake()->randomNumber(1);
 
 dataset('weight', [$weight]);
 dataset('width', [$width]);
@@ -16,6 +17,7 @@ dataset('height', [$height]);
 dataset('length', [$length]);
 dataset('diameter', [$diameter]);
 dataset('cubicWeight', [$cubicWeight]);
+dataset('objectType', [$objectType]);
 dataset('product', [new Product($weight, $width, $height, $length, $diameter, $cubicWeight)]);
 
 
@@ -109,3 +111,17 @@ describe('cubicWeight property', function() {
     })->with('product', 'cubicWeight');
 });
 
+describe('object type property', function() {
+    test('It should be possible to access the objectType property using the getObjectType() method', function(Product $product){
+        expect($product->getObjectType())
+            ->not->toBeNull()
+            ->toBeInt();
+    })->with('product');
+
+    test('The getObjectType() method must return the same value insert on the constructor method', function(Product $product, int $objectType){
+        expect($product->getObjectType())
+            ->not->toBeNull()
+            ->toBeInt()
+            ->toBe($objectType);
+    })->with('product', 'objectType');
+});
