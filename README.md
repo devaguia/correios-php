@@ -139,7 +139,7 @@ $responseBody    = $correios->authentication()->getResponseBody();
 $responseCode    = $correios->authentication()->getResponseCode();
 $errors          = $correios->authentication()->getErrors();
 
-// Pega o número do e da diretoria com base na responsta da autenticação
+// Pega o número do e da diretoria com base na responsta da autenticação - Gets the board number based on the authentication response
 $contractNumber = $correios->authentication()->getContract();
 $drNumber = $correios->authentication()->getDr();
 
