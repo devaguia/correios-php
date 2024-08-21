@@ -65,8 +65,8 @@ describe('setToken() method', function() {
     test('It should be possible to use the setToken() method', function(string $username, string $password, string $contract, string $token) {
         $authentication = new Authentication($username, $password, $contract, true);
 
-        expect(fn() =>
-            $authentication->setToken($token)
+        expect(
+            fn() => $authentication->setToken($token)
         )->not->toThrow(Exception::class);
 
     })->with('username', 'password', 'contract', 'token');
@@ -140,16 +140,15 @@ describe('getDr() method', function() {
         $authentication = new Authentication($username, $password, $contract, true);
         $authentication->getToken();
 
-        expect(fn() =>
-        $authentication->getDr()
+        expect(
+            fn() => $authentication->getDr()
         )->not->toThrow(Exception::class);
 
     })->with('username', 'password', 'contract');
 
     test('The getDr() method must return a string', function(string $username, string $password, string $contract) {
         $authentication = new Authentication($username, $password, $contract, true);
-        $authentication->getToken();
-
+        
         expect($authentication->getDr())
             ->not->toBeNull()
             ->toBeString();
@@ -160,10 +159,9 @@ describe('getDr() method', function() {
 describe('getContract() method', function() {
     test('It should be possible to use the getContract() method', function(string $username, string $password, string $contract) {
         $authentication = new Authentication($username, $password, $contract, true);
-        $authentication->getToken();
         
-        expect(fn() =>
-        $authentication->getToken()
+        expect(
+            fn() => $authentication->getContract()
         )->not->toThrow(Exception::class);
 
     })->with('username', 'password', 'contract');

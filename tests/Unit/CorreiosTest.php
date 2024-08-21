@@ -121,7 +121,7 @@ describe('getLotId() method', function() {
         $correios->setLotId($timestamp);
 
         expect($correios->getLotId())
-            ->toBe($timestamp);
+            ->toBe((string) $timestamp);
     })->with('correios');
 });
 
@@ -136,6 +136,6 @@ describe('getRequestNumber() method', function() {
         $correios->setRequestNumber($timestamp);
 
         expect($correios->getRequestNumber())
-            ->toBe($timestamp);
+            ->toBe((string) $timestamp);
     })->with('correios');
 });
