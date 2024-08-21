@@ -10,16 +10,15 @@ class Authentication extends AbstractRequest
     private string $username;
     private string $password;
     private string $dr;
-    private object $cartaoPostagem;
     private string $contract;
+    private string $postcard;
     private string $token;
     private \DateTime $tokenExpiration;
-    public function __construct(string $username, string $password, string $contract, bool $isTestMode = false)
+    public function __construct(string $username, string $password, string $postcard, bool $isTestMode = false)
     {
         $this->username = $username;
         $this->password = $password;
-        $this->contract = $contract;
-        $this->cartaoPostagem = (object) [];
+        $this->postcard = $postcard;
 
         $this->setEnvironment($isTestMode ? 'sandbox' : 'production');
         $this->setEndpoint('token/v1/autentica/cartaopostagem');
@@ -32,7 +31,7 @@ class Authentication extends AbstractRequest
     private function buildBody(): void
     {
         $this->setBody([
-            'numero' => $this->contract
+            'numero' => $this->postcard
         ]);
     }
 
@@ -48,35 +47,47 @@ class Authentication extends AbstractRequest
     {
         try {
             $this->sendRequest();
-            $data = $this->getResponseBody();
 
-            if (isset($data->token) && isset($data->expiraEm)) {
-                $this->token = $data->token;
-                $this->tokenExpiration = new \DateTime($data->expiraEm);
-            }
-            // Set DR and Contract
-            if (isset($data->cartaoPostagem->dr) && isset($data->cartaoPostagem->contrato)) {
-                $this->cartaoPostagem->dr = $data->cartaoPostagem->dr;
-                $this->cartaoPostagem->contract = $data->cartaoPostagem->contrato;
-            }
+            $data = $this->getResponseBody();
+            $this->setTokenProperties($data);
+            $this->setContract($data);
+            $this->setDr($data);
+            
         } catch (ApiRequestException $e) {
             $this->errors[$e->getCode()] = $e->getMessage();
         }
     }
 
-    public function setCartaoPostagem(object $cartaoPostagem): void
+    private function setTokenProperties(object $data): void
     {
-        $this->cartaoPostagem = $cartaoPostagem;
+        if (isset($data->token) && isset($data->expiraEm)) {
+            $this->token = $data->token;
+            $this->tokenExpiration = new \DateTime($data->expiraEm);
+        }
     }
 
     public function getDr(): string
     {
-        return $this->cartaoPostagem->dr ?? '';
+        return $this->dr ?? '';
+    }
+
+    private function setDr(object $data): void
+    {
+        if (isset($data->cartaoPostagem->dr)) {
+            $this->dr = $data->cartaoPostagem->dr;
+        }
     }
 
     public function getContract(): string
     {
-        return $this->cartaoPostagem->contract ?? '';
+        return $this->contract ?? '';
+    }
+
+    private function setContract(object $data): void
+    {
+        if (isset($data->cartaoPostagem->contrato)) {
+            $this->contract = $data->cartaoPostagem->contrato;
+        }
     }
 
     public function getToken(): string
