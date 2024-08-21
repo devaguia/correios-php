@@ -32,7 +32,7 @@ $correios = new \Correios\Correios(
 
 // Use um número de requisição e ID do lot personalizado - Use a custom request number and Lot ID
 $correios->setRequestNumber(requestNumber: '20230831');
-$correios->setLotId(requestNumber: '20230831LT');
+$correios->setLotId(lotId: '20230831LT');
 ```
 
 ### Rastro (Tracking)
