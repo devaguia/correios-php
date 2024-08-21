@@ -23,8 +23,9 @@ class Correios
 
     public function __construct(string $username, string $password, string $postcard, bool $isTestMode = false, string $token = '')
     {
-        $this->requestNumber = time();
-        $this->lotId         = '';
+        $timestamp = time();
+        $this->lotId = "{$timestamp}LT";
+        $this->requestNumber = $timestamp;
 
         $this->authenticate($username, $password, $postcard, $isTestMode, $token);
     }
@@ -91,8 +92,18 @@ class Correios
         $this->requestNumber = $requestNumber;
     }
 
+    public function getRequestNumber(): string
+    {
+        return $this->requestNumber;
+    }
+
     public function setLotId(string $lotId): void
     {
         $this->lotId = $lotId;
+    }
+
+    public function getLotId(): string
+    {
+        return $this->lotId;
     }
 }
