@@ -18,7 +18,7 @@ dataset('length', [$length]);
 dataset('diameter', [$diameter]);
 dataset('cubicWeight', [$cubicWeight]);
 dataset('objectType', [$objectType]);
-dataset('product', [new Product($weight, $width, $height, $length, $diameter, $cubicWeight)]);
+dataset('product', [new Product($weight, $width, $height, $length, $diameter, $cubicWeight, $objectType)]);
 
 
 describe('weight property', function() {
