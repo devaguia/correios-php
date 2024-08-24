@@ -55,6 +55,26 @@ describe('get() method', function() {
 
     })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
 
+    test('It should be possible to use the get() method with optional dimensions without generate any Exception or empty array', function(Authentication $authentication, string $serviceCode, string $originCep, string $destinyCep) {
+        $price = new Price($authentication, time());
+        expect(
+            fn() => $price->get(
+                [$serviceCode],
+                [[
+                    'weight' => fake()->randomFloat(1,1, 1000),
+                    'width' => fake()->randomFloat(1,10, 20),
+                    'height' => fake()->randomFloat(1,10, 20),
+                    'length' => fake()->randomFloat(1,10, 20),
+                ]],
+                $originCep,
+                $destinyCep
+            )
+        )
+        ->not->toBeEmpty()
+        ->not->toThrow(Exception::class);
+
+    })->with('authentication', 'serviceCode', 'originCep', 'destinyCep');
+
     test('The get() method should generate an InvalidCepException when we use an invalid CEP', function(Authentication $authentication, string $serviceCode, string $destinyCep) {
         $price = new Price($authentication, time());
         expect(
