@@ -12,7 +12,7 @@ trait CepHandler
     {
         $cleanCep = cep()->validate($cep);
 
-        if ($this->originCep === $cleanCep || $this->destinyCep === $cleanCep) {
+        if ($this->originCep === $cleanCep && $this->destinyCep === $cleanCep) {
             throw new SameCepException($cep);
         }
 
