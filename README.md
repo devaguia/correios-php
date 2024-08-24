@@ -32,7 +32,10 @@ $correios = new \Correios\Correios(
 
 // Use um número de requisição e ID do lot personalizado - Use a custom request number and Lot ID
 $correios->setRequestNumber(requestNumber: '20230831');
-$correios->setLotId(requestNumber: '20230831LT');
+$correios->getRequestNumber();
+
+$correios->setLotId(lotId: '20230831LT');
+$correios->getLotId();
 ```
 
 ### Rastro (Tracking)
@@ -136,6 +139,9 @@ $responseBody    = $correios->authentication()->getResponseBody();
 $responseCode    = $correios->authentication()->getResponseCode();
 $errors          = $correios->authentication()->getErrors();
 
+// Pega o número do e da diretoria com base na responsta da autenticação - Gets the board number based on the authentication response
+$contractNumber = $correios->authentication()->getContract();
+$drNumber = $correios->authentication()->getDr();
 
 // Usando um token gerado anteriormente - Using a token generated earlie
 $correios = new \Correios\Correios(

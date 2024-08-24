@@ -97,6 +97,7 @@ describe('authentication() method', function() {
     })->with('correios');
 });
 
+
 describe('getErrors() method', function() {
     test('It should be possible to access the getErrors() method', function(Correios $correios){
         expect($correios->getErrors())
@@ -106,5 +107,35 @@ describe('getErrors() method', function() {
     test('The getErrors() method should return an array of strings', function(Correios $correios){
         expect($correios->getErrors())
             ->toBeArray();
+    })->with('correios');
+});
+
+describe('getLotId() method', function() {
+    test('It should be possible to access the getLotId() method', function(Correios $correios){
+        expect($correios->getLotId())
+            ->not->toBeNull();
+    })->with('correios');
+
+    test('The getLotId() method must return the same value that was entered in the setLotId() method', function(Correios $correios){
+        $timestamp = time();
+        $correios->setLotId($timestamp);
+
+        expect($correios->getLotId())
+            ->toBe((string) $timestamp);
+    })->with('correios');
+});
+
+describe('getRequestNumber() method', function() {
+    test('It should be possible to access the getRequestNumber() method', function(Correios $correios){
+        expect($correios->getRequestNumber())
+            ->not->toBeNull();
+    })->with('correios');
+
+    test('The getRequestNumber() method must return the same value that was entered in the setRequestNumber() method', function(Correios $correios){
+        $timestamp = time();
+        $correios->setRequestNumber($timestamp);
+
+        expect($correios->getRequestNumber())
+            ->toBe((string) $timestamp);
     })->with('correios');
 });

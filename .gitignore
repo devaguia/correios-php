@@ -4,3 +4,4 @@ vendor/
 # ignore files
 *.lock
 .idea/
+index.php
