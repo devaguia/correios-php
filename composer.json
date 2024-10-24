@@ -1,6 +1,6 @@
 {
   "name": "devaguia/correios-php",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Correios API library for PHP",
   "license": "GPL-3.0",
   "scripts": {
@@ -33,7 +33,7 @@
     ]
   },
   "require-dev": {
-    "pestphp/pest": "^2.9",
+    "pestphp/pest": "^2.36.0",
     "pestphp/pest-plugin-faker": "^2.0"
   },
   "config": {

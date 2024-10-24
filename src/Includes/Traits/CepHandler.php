@@ -8,14 +8,13 @@ trait CepHandler
 {
     private string $originCep  = '';
     private string $destinyCep = '';
-    private function validateCep(string $cep): string
+    private function validateCep(string $originCep, string $destinyCep): void
     {
-        $cleanCep = cep()->validate($cep);
+        $this->originCep = cep()->validate($originCep);
+        $this->destinyCep = cep()->validate($destinyCep);
 
-        if ($this->originCep === $cleanCep || $this->destinyCep === $cleanCep) {
-            throw new SameCepException($cep);
+        if ($this->originCep === $this->destinyCep) {
+            throw new SameCepException($this->originCep);
         }
-
-        return $cleanCep;
     }
 }

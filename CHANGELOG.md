@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.4] - 2024-10-24
+
+### Fixed
+- Updates the CepHandler class to validate both CEPs at the same time and avoid duplication of origin and destination CEPs';
+
+
 ## [1.0.3] - 2024-08-23
 
 ### Fixed
