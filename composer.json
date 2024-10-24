@@ -1,6 +1,6 @@
 {
   "name": "devaguia/correios-php",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Correios API library for PHP",
   "license": "GPL-3.0",
   "scripts": {

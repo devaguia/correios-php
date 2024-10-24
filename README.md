@@ -1,6 +1,13 @@
 # Correios PHP
 Correios API library for PHP
+<p>
+    <a href="https://github.com/devaguia/correios-php/actions"><img alt="GitHub Workflow Status (master)" src="https://img.shields.io/github/actions/workflow/status/devaguia/correios-php/ci-cd-tests.yml"></a>
+    <a href="https://packagist.org/packages/devaguia/correios-php"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/devaguia/correios-php"></a>
+    <a href="https://packagist.org/packages/devaguia/correios-php"><img alt="Latest Version" src="https://img.shields.io/packagist/v/devaguia/correios-php"></a>
+    <a href="https://packagist.org/packages/devaguia/correios-php"><img alt="License" src="https://img.shields.io/packagist/l/devaguia/correios-php"></a>
+</p>
 
+* **[Instalação (Installation)](#installation)**
 * **[Utilização Básica (Basic Usage)](#usage)**
 * **[Respostas API (API Response)](#response)**
 * **[Autenticação (Authentication)](#auth)**
@@ -8,6 +15,13 @@ Correios API library for PHP
 * **[Árvore de Arquivos (File Tree)](#tree)**
 
 <br/>
+
+<h2 id="installation">Instalação (Installation)</h2>
+
+### Instale utilizando o Composer (Install using Composer)
+```bash
+composer require devaguia/correios-php
+```
 
 <h2 id="usage">Utilização Básica (Basic Usage)</h2>
 
