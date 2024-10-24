@@ -1,13 +1,11 @@
-name: Generate github tag version ☕
-
 on:
-  push:
+  pull_request_target:
+    types: [closed]
     branches: [master]
 
 jobs:
-  build:
-    if: "!contains(github.event.head_commit.message, '--skip-tagging')"
-
+  release:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
@@ -30,19 +28,20 @@ jobs:
           rm -f README.md
           rm -f .gitignore
 
-      - name: Create a new GitHub tag 🤖
+      - name: Create a new GitHub tag release 🤖
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG_VERSION=$(bash .github/tags.sh)
-          rm -r -f .github/
+          TAG_VERSION=$(bash .github/tag.sh)
 
-          git config --global user.email "aguiartgv@gmail.com"
-          git config --global user.name "Matheus Aguiar"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
 
           git add .
           git commit -am "build: Building correios-php new version"
 
-          git tag -a v$TAG_VERSION -m "Add new tag version: v$TAG_VERSION"
-          git push origin v$TAG_VERSION
+          git tag "v$TAG_VERSION"
+          git push origin "v$TAG_VERSION"
 
           echo "All right! 🎉"
 
