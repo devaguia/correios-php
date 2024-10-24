@@ -23,6 +23,8 @@ Correios API library for PHP
 composer require devaguia/correios-php
 ```
 
+<br/>
+
 <h2 id="usage">Utilização Básica (Basic Usage)</h2>
 
 ### Configuração (Setup)
