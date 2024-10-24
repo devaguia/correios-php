@@ -49,8 +49,7 @@ class Date extends AbstractRequest
     public function get(array $serviceCodes, string $originCep, string $destinyCep, array $fields = []): array
     {
         try {
-            $this->originCep  = $this->validateCep($originCep);
-            $this->destinyCep = $this->validateCep($destinyCep);
+            $this->validateCep($originCep, $destinyCep);
 
             $this->buildBody($serviceCodes, $fields);
             $this->sendRequest();
